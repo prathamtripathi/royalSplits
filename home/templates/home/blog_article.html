@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main>
+    <header id="header" class="d-flex align-items-center">
+        <a href="{% url 'home' %}" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+        <div class="container d-flex align-items-center justify-content-between">
+          <h1 class="logo"><a href="{% url 'home' %}" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+          <nav id="navbar" class="navbar">
+            <ul>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#about">Why Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'blog_list' %}">Our Blogs</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Product</a></li>
+              
+              
+                      {% if user.is_authenticated %}
+                  <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+                    <form id="logout" method="POST" action="{% url 'logout' %}">
+                     {% csrf_token %}
+                     <input type="hidden" />
+                     </form>
+                 <a class="nav-link scrollto" href="{% url 'cart' %}" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+             {% else %} 
+                <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+           <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+            {% endif %} 
+              
+              <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                      <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                        <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                        <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                         <li><a class="nav-link scrollto" href="{% url 'tnc' %}#instruct">Instruction</a></li>
+                        {% if user.is_authenticated %}
+                          <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                          {% endif %} 
+                        <li><a class="nav-link scrollto" href="{% url 'page_404' %}">Page 404</a></li>
+                        <li><a class="nav-link scrollto" href="{% url 'page_500' %}">Page 500</a></li>
+                        <li><a class="nav-link scrollto" href="{% url 'page_career' %}">Join Us</a></li>
+                        <li><a class="nav-link scrollto" href="{% url 'maintain' %}">Maintainance Page</a></li>
+                    </ul>
+              </li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+          </nav><!-- .navbar -->
+      </header> 
+
+      <section class="font-1">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-8 col-lg-10">
+                                <h1 class="fs-3 fs-md-4 color-10">{{data.title}}</h1>
+                                <div class="fs-0 fw-400 lead color-10">By
+                                    <a href="#">{{data.author.name}}</a>
+                                </div>
+                                <hr class="color-9">
+                                <div class="row mb-5">
+                                    <div class="col-4 color-10">
+                                        <img class="mr-2 color-10" src="assets2/images/icons/icon-time.svg" width="22">{{data.pub_date}}</div>
+                                    <div class="col-4">
+                                        <div class="fa fa-bookmark fs-1 mr-2 color-10"></div>
+                                        <a href="#">Career</a>,
+                                        <a href="#">Tools</a>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="fa fa-comment fs-1 mr-2 color-10">
+                                        <a href="#">17 Comments</a>
+                                    </div>
+                                </div>
+                                <img class="mb-4 radius-primary" src="{{blog.blog_image.url}}">
+                                <p class="lead color-9">{{data.body}}</p>
+                                
+                                <div class="mt-4">
+                                    <a class="btn btn-icon btn-xs facebook btn-icon-left mr-2" href="#">
+                                        <span class="fa fa-facebook"></span> Share</a>
+                                    <a class="btn btn-icon btn-xs google-plus btn-icon-left mr-2" href="#">
+                                        <span class="fa fa-google-plus"></span> Plus</a>
+                                    <a class="btn btn-icon btn-xs twitter btn-icon-left" href="#">
+                                        <span class="fa fa-twitter"></span> tweet</a>
+                                </div>
+                                <hr class="color-9 mt-6 mb-4">
+                                <div class="row justify-content-center align-items-center text-center text-md-left">
+                                    <div class="col-8 col-md-3">
+                                        <a href="assets2/images/portraits/square/03.jpg" data-lightbox="profile-pic">
+                                            <img class="img-thumbnail radius-primary" src="{% static 'assets2/images/portraits/square/03.jpg' %}">
+                                        </a>
+                                    </div>
+                                    <div class="col-12 col-md-9 mt-3 mt-md-0">
+                                        <h5 class="mb-2 color-10">{{auth.name}}</h5>
+                                        <p class="color-10">{{auth.about_author}}</p>
+                                    </div>
+                                </div>
+                                <hr class="color-10 mt-4 mb-6">
+                                <h4 class="color-10">Comments...</h4>
+                                <ul class="no-style pl-0 color-10">
+                                    <li class="media background-2 p-4" >
+                                        <img class="img-thumbnail d-flex mr-3" alt="Image" src="{% static 'assets2/images/portraits/square/01.jpg' %}" width="60">
+                                        
+                                        <div class="media-body">
+                                            {%for comment in comments%}
+                                            <h5 class="mb-0 fs-0 color-10"></h5>
+                                            <small class="color-10 fw-600">
+                                                <span>{{comment.your_name}}:</span>
+                                                
+                                            </small>
+                                            <div class="mt-3 color-10"></div>
+                                            <p class="fw-300" > {{comment.comment_text}}</p>
+                                            <hr class="color-9 mt-4">
+                                            
+                                            {%endfor %}
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                                <h5 class="mt-6 color-10">Leave a comment</h5>
+                                 <form method="post" class="color-10">
+                                            {%csrf_token %}
+                                           
+                                            {{form.as_p}}
+                                            <input class="btn btn-primary text-uppercase color-10" type ="submit" value="Post comment">
+                                        </form>
+                                
+                            </div>
+                        </div>
+                        <!--/.row-->
+                    </div>
+                    <!--/.container-->
+                </section>
+                <footer class="background-1 color-8 py-3 fs--1 fw-600 font-heading">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-auto font-1">&copy; 2017 POSH &trade; Inc. </div>
+                            <div class="col fs-0 text-right">
+                                <a class="p-2 color-8" href="#">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                                <a class="p-2 color-8" href="#">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                                <a class="p-2 color-8" href="#">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                                <a class="p-2 color-8" href="#">
+                                    <i class="fa fa-behance"></i>
+                                </a>
+                                <a class="p-2 color-8" href="#">
+                                    <i class="fa fa-dribbble"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+</main>
+{% endblock %}

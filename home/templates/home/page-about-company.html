@@ -1,0 +1,481 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .navbar {
+  padding: 0;
+}
+
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display:flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+}
+
+.navbar  li > ul {
+  margin-left: 5px;
+}
+
+.navbar a {
+  display: flex;
+  font-weight: 400;
+  font-family: 'Archivo', sans-serif;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 15px 24px 15px;
+  font-size: 15px;
+  color: #fff;
+  white-space: nowrap;
+  transition: 0.3s;
+}
+
+.navbar a i {
+  font-size: 12px;
+  line-height: 0;
+  margin-left: 5px;
+}
+
+.navbar a:hover, .navbar .active, .navbar li:hover > a {
+  background: #cc1616;
+}
+
+.navbar .dropdown ul {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 30px);
+  margin: 0;
+  padding: 10px 0;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  transition: 0.3s;
+}
+
+.navbar .dropdown ul li {
+  min-width: 200px;
+}
+
+.navbar .dropdown ul a {
+  padding: 10px 20px;
+  color: #191919;
+}
+
+.navbar .dropdown ul a i {
+  font-size: 12px;
+}
+
+.navbar .dropdown ul a:hover, .navbar .dropdown ul .active:hover, .navbar .dropdown ul li:hover > a {
+  color: #fff;
+}
+
+.navbar .dropdown:hover > ul {
+  opacity: 1;
+  top: 100%;
+  visibility: visible;
+}
+
+.navbar .dropdown .dropdown ul {
+  top: 0;
+  left: calc(100% - 30px);
+  visibility: hidden;
+}
+
+.navbar .dropdown .dropdown:hover > ul {
+  opacity: 1;
+  top: 0;
+  left: 100%;
+  visibility: visible;
+}
+
+@media (max-width: 1366px) {
+  .navbar .dropdown .dropdown ul {
+    left: -90%;
+  }
+  .navbar .dropdown .dropdown:hover > ul {
+    left: -100%;
+  }
+}
+
+/**
+* Mobile Navigation 
+*/
+.mobile-nav-toggle {
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+  line-height: 0;
+  transition: 0.5s;
+}
+
+.mobile-nav-toggle.bi-x {
+  color: #cc1616;
+}
+
+@media (max-width: 991px) {
+  .mobile-nav-toggle {
+    display: inline-block;
+  }
+  .navbar ul {
+    display: none;
+  }
+}
+
+.navbar-mobile {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  transition: 0.3s;
+  z-index: 999;
+}
+
+.navbar-mobile .mobile-nav-toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.navbar-mobile ul {
+  display: block;
+  position: absolute;
+  top: 55px;
+  right: 15px;
+  bottom: 15px;
+  left: 15px;
+  padding: 10px 0;
+  background-color: #fff;
+  overflow-y: auto;
+  transition: 0.3s;
+}
+
+.navbar-mobile a {
+  padding: 10px 20px;
+  font-size: 15px;
+  color: #191919;
+}
+.navbar-mobile a:hover, .navbar-mobile .active, .navbar-mobile li:hover > a {
+  color: #cc1616;
+  background: none;
+}
+
+.navbar-mobile .getstarted {
+  margin: 15px;
+}
+
+.navbar-mobile .dropdown ul {
+  position: static;
+  display: none;
+  margin: 10px 20px;
+  padding: 10px 0;
+  z-index: 99;
+  opacity: 1;
+  visibility: visible;
+  background: #fff;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+}
+
+.navbar-mobile .dropdown ul li {
+  min-width: 200px;
+}
+
+.navbar-mobile .dropdown ul a {
+  padding: 10px 20px;
+}
+
+.navbar-mobile .dropdown ul a i {
+  font-size: 12px;
+}
+
+.navbar-mobile .dropdown ul a:hover, .navbar-mobile .dropdown ul .active:hover, .navbar-mobile .dropdown ul li:hover > a {
+  color: #cc1616;
+}
+
+.navbar-mobile .dropdown > .dropdown-active {
+  display: block;
+}
+</style>
+
+<header id="header" class="d-flex align-items-center">
+    <a href="{% url 'home' %}" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+    <div class="container d-flex align-items-center justify-content-between">
+      <h1 class="logo"><a href="{% url 'home' %}" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+      <nav id="navbar" class="navbar">
+        <ul>
+           <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'home' %}#about">Why Us</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'blog_list' %}">Our Blogs</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Product</a></li>
+          
+          
+                  {% if user.is_authenticated %}
+              <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+                <form id="logout" method="POST" action="{% url 'logout' %}">
+                 {% csrf_token %}
+                 <input type="hidden" />
+                 </form>
+            
+         {% else %} 
+            <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+       <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+        {% endif %} 
+        <a class="nav-link scrollto" href="{% url 'cart' %}" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+                 
+          <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+                <ul>
+                  <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                     <li><a class="nav-link scrollto" href="{% url 'tnc' %}#instruct">Instruction</a></li>
+                     {% if user.is_authenticated %}
+                    <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                    {% endif %} 
+                    <li><a class="nav-link scrollto" href="{% url 'page_404' %}">Page 404</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'page_500' %}">Page 500</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'page_career' %}">Join Us</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'findus' %}">Find Us</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'maintain' %}">Maintainance Page</a></li>
+                </ul>
+          </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+    <!-- .navbar -->
+    
+  
+  </header>
+ <body data-spy="scroll" data-target=".inner-link" data-offset="60">
+        <main>
+                
+            <!-- /.znav-container-->
+            <section class="p-0 color-white font-1">
+                <div class="background-holder overlay overlay-2"> </div>
+                <!--/.background-holder-->
+                <div class="container">
+                    <div class="row h-half align-items-center py-5">
+                        <div class="col-md-8 col-lg-5">
+                            <img src="{% static 'assets/img/logo.gif' %}" class="img-fluid" alt="" style="width: 40%;">
+                            <h1 class="fs-3 fs-md-4 mb-4" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">About Royal Splits</h1>
+                            <p class="lead fs-xs-1">Sleek, Compact, Simple Design And Concept, Cutting Edge Necessity For Lighting Up.</p>
+                        </div>
+                        <img src="{% static 'assets/img/Product/page-subtitle-right-360.gif' %}" class="img-fluid" alt="" style="width: 400px;">
+                    </div>
+                    <!--/.row-->
+                </div>
+                <!--/.container-->
+            </section>
+            <section class="font-1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-2 hidden-md-down">  
+                        </div>
+                        <div class="col-12 hidden-lg-up color-10">
+                            <h2 class="mb-5 color-10">Our Story</h2>
+                        </div>
+                        <div class="col-lg-6 color-10">
+                            <h5 class="mb-4">&#8212; Story Behind The Royal Splits</h5>
+                            <p class="lead mb-5 color-10">{{ about.story }}</p>
+                            <h5 class="mb-4">&#8212; Mission &amp; Vision</h5>
+                            <p class="color-10 mb-lg-0 mb-5"> {{ about.mission }}</p>
+                        </div>
+                        <div class="col-lg-4 pl-lg-5 color-10">
+                            <h5 class="mb-0">&#8212; Founded in</h5>
+                            <div class="fs-5 fw-100 mb-5">2015</div>
+                            <h5 class="mb-3">&#8212; Offices in</h5>
+                            <p class="fs-3 color-7 lh-1 mb-5 fw-300">Orlando, USA</p>
+                            <h5 class="mb-3">&#8212; Services</h5>
+                            <p class="lead color-9">Branding, Packaging, Websites, E-Commerce &amp; Marketing</p>
+                        </div>
+                    </div>
+                    <!--/.row-->
+                </div>
+                <!--/.container-->
+            </section>
+            <section class="text-center background-11 font-1">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <h3 class="color-1 mb-4">Meet the makers</h3>
+                            <p class="color-4 lead">Whether you're building a landing page for your mobile app or an elegant, corporate website, Posh has layouts that cover your needs.</p>
+                            <hr class="short mb-8 color-8 mt-4"> </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+                            <img class="radius-round px-5" src="{% static 'assets2/images/portraits/portrait-01.jpg' %}">
+                            <h5 class="fs-0 mt-3 mb-1">
+                                <a class="color-1" href="#">Taylor Otwell</a>
+                            </h5>
+                            <div class="fs--1 text-uppercase color-6">Creator of Laravel</div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+                            <img class="radius-round px-5" src="{% static 'assets2/images/portraits/portrait-02.jpg' %}">
+                            <h5 class="fs-0 mt-3 mb-1">
+                                <a class="color-1" href="#">Jeffrey Way</a>
+                            </h5>
+                            <div class="fs--1 text-uppercase color-6">Founder of Laracasts</div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+                            <img class="radius-round px-5" src="{% static 'assets2/images/portraits/portrait-03.jpg' %}">
+                            <h5 class="fs-0 mt-3 mb-1">
+                                <a class="color-1" href="#">Michele Hansen</a>
+                            </h5>
+                            <div class="fs--1 text-uppercase color-6">Developer / Surfer</div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+                            <img class="radius-round px-5" src="{% static 'assets2/images/portraits/portrait-04.jpg' %}">
+                            <h5 class="fs-0 mt-3 mb-1">
+                                <a class="color-1" href="#">Evan You</a>
+                            </h5>
+                            <div class="fs--1 text-uppercase color-6">Creator of Vue.js</div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+                            <img class="radius-round px-5" src="{% static 'assets2/images/portraits/portrait-05.jpg' %}">
+                            <h5 class="fs-0 mt-3 mb-1">
+                                <a class="color-1" href="#">Laura Elizabeth</a>
+                            </h5>
+                            <div class="fs--1 text-uppercase color-6">Partner at Tighten</div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+                            <img class="radius-round px-5" src="{% static 'assets2/images/portraits/portrait-06.jpg' %}">
+                            <h5 class="fs-0 mt-3 mb-1">
+                                <a class="color-1" href="#">Nils Adermann</a>
+                            </h5>
+                            <div class="fs--1 text-uppercase color-6">Co-Creator of Composer</div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+                            <img class="radius-round px-5" src="{% static 'assets2/images/portraits/portrait-07.jpg' %}">
+                            <h5 class="fs-0 mt-3 mb-1">
+                                <a class="color-1" href="#">Justin Jackson</a>
+                            </h5>
+                            <div class="fs--1 text-uppercase color-6">Maker</div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+                            <img class="radius-round px-5" src="{% static 'assets2/images/portraits/portrait-08.jpg' %}">
+                            <h5 class="fs-0 mt-3 mb-1">
+                                <a class="color-1" href="#">Freek Van der Herten</a>
+                            </h5>
+                            <div class="fs--1 text-uppercase color-6">Developer at Spatie</div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+                            <img class="radius-round px-5" src="{% static 'assets2/images/portraits/portrait-09.jpg' %}">
+                            <h5 class="fs-0 mt-3 mb-1">
+                                <a class="color-1" href="#">Sean Larkin</a>
+                            </h5>
+                            <div class="fs--1 text-uppercase color-6">Webpack Core Team</div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+                            <img class="radius-round px-5" src="{% static 'assets2/images/portraits/portrait-10.jpg' %}">
+                            <h5 class="fs-0 mt-3 mb-1">
+                                <a class="color-1" href="#">Adam Wathan</a>
+                            </h5>
+                            <div class="fs--1 text-uppercase color-6">UI / UX Designer</div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+                            <img class="radius-round px-5" src="{%  static 'assets2/images/portraits/portrait-11.jpg' %}">
+                            <h5 class="fs-0 mt-3 mb-1">
+                                <a class="color-1" href="#">Tom Schlick</a>
+                            </h5>
+                            <div class="fs--1 text-uppercase color-6">Sr. Engineer at RunMyBusiness</div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+                            <img class="radius-round px-5" src="{% static 'assets2/images/portraits/portrait-12.jpg' %}">
+                            <h5 class="fs-0 mt-3 mb-1">
+                                <a class="color-1" href="#">Maxime Locqueville</a>
+                            </h5>
+                            <div class="fs--1 text-uppercase color-6">Lead Engineer at VideoBlocks</div>
+                        </div>
+                    </div>
+                    <!--/.row-->
+                </div>
+                <!--/.container-->
+            </section>
+            <section class="font-1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center color-10">
+                            <h3>Latest News</h3>
+                            <p class="color-9 lead">The latest news, thoughts and updates from the team.</p>
+                            <hr class="short color-8 mb-7 mt-4"> </div>
+                    </div>
+                    <div class="card-deck">
+                        {% for it in prod.all %}
+                        <div class="card mb-5 mb-md-0">
+                            <a class="overflow-hidden" href="#">
+                                <img class="card-img-top" src="{{it.news_image.url}}" alt="Card image cap">
+                            </a>
+                            <div class="card-block">
+                                <a class="color-1" href="#">
+                                    <h5 class="card-title">{{it.news_title}}</h5>
+                                </a>
+                                <p class="card-text color-4 fw-300 font-1">{{ it.news_desc }}</p>
+                            </div>
+                            <div class="card-footer background-transparent border-top-0">
+                                <div class="media align-items-center">
+                                    <div class="media-body lh-1">
+                                        <a class="color-1" href="#">
+                                            <span class="fs--1 color-5">{{ it.date_added }}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       {% endfor %}
+                    </div>
+                </div>
+               
+            </section>
+            <section class="text-center font-1 color-white py-0">
+                <div class="background-holder overlay overlay-1" style="background-image:url('static/assets2/images/team-officespace.jpg)';"> </div>
+                <!--/.background-holder-->
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 col-xl-6 py-8">
+                            <h3 class="mb-3">We're always looking for talent</h3>
+                            <p class="lead">Got what it takes to work with us? Great! Send us a link to your resumé or portfolio to become part of our tribe.</p>
+                            <a class="btn btn-primary mt-3" href="{% url 'page_career' %}">See Job Openings</a>
+                        </div>
+                    </div>
+                    <!--/.row-->
+                </div>
+                <!--/.container-->
+            </section>
+            <footer class="background-1 color-8 py-3 fs--1 fw-600 font-heading">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-auto font-1">&copy; 2015 The Royal Splits &trade; </div>
+                        <div class="col fs-0 text-right">
+                            <a class="p-2 color-8" href="#">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a class="p-2 color-8" href="#">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a class="p-2 color-8" href="#">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                            <a class="p-2 color-8" href="#">
+                                <i class="fa fa-behance"></i>
+                            </a>
+                            <a class="p-2 color-8" href="#">
+                                <i class="fa fa-dribbble"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    {% endblock %}

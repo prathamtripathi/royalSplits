@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<header id="header" class="d-flex align-items-center">
+  <a href="{% url 'home' %}" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+  <div class="container d-flex align-items-center justify-content-between">
+    <h1 class="logo"><a href="{% url 'home' %}" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+    <nav id="navbar" class="navbar">
+      <ul>
+         <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#about">Why Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'blog_list' %}">Our Blogs</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Product</a></li>
+        
+        
+                {% if user.is_authenticated %}
+            <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+              <form id="logout" method="POST" action="{% url 'logout' %}">
+               {% csrf_token %}
+               <input type="hidden" />
+               </form>
+           <a class="nav-link scrollto" href="{% url 'cart' %}" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+       {% else %} 
+          <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+     <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+      {% endif %} 
+        
+        <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                   <li><a class="nav-link scrollto" href="{% url 'tnc' %}#instruct">Instruction</a></li>
+                  {% if user.is_authenticated %}
+                          <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                          {% endif %} 
+                  <li><a class="nav-link scrollto" href="{% url 'page_404' %}">Page 404</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'page_500' %}">Page 500</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'page_career' %}">Join Us</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'maintain' %}">Maintainance Page</a></li>
+              </ul>
+        </li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+</header>
+
+
+
+  <section id="contact" class="contact">
+    <div class="container">
+
+      <div class="section-title">
+        <h2 style="font-family: 'Courgette', cursive; text-transform: capitalize; font-size: 80px; font-weight: 400;">{{ job_data.title }}</h2>
+      </div>
+      <div class="row color-10">
+        <div class="col-lg-12 pt-12 pt-lg-12 order-12 order-lg-12 content" data-aos="fade-right">
+        <div class="container d-flex align-items-center" style="justify-content: center;">
+        <h2 ><h2>
+        </div>
+        <ul>
+            <h2 style="font-weight: 400;">Pre-requisites Required:</h2>
+            <li style="font-size: 27px;"> {{ job_data.prerequisites }}</li>
+            
+          
+        </ul>
+        </div>
+      </div>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <h4 class="color-white mb-2">Apply Here:</h4>
+            <p class="color-7 font-1">Fill out the form and upload your resume and relax, we got this !</p>
+
+
+            <form action="" method="POST" class="post-form" enctype="multipart/form-data" >  
+              {% csrf_token %}  
+              {{ form.as_p }}  
+              <button type="submit" class="btn btn-primary text-uppercase">Save</button>  
+            </form> 
+            <!--
+            <form class="mt-5 row" >
+                <div class="col-md-6">
+                    <label>First Name</label>
+                    <input class="form-control mb-3" type="text" placeholder="First Name"> </div>
+                <div class="col-md-6">
+                    <label>Last Name</label>
+                    <input class="form-control mb-3" type="text" placeholder="Last Name"> </div>
+                <div class="col-12">
+                    <label>Email</label>
+                    <input class="form-control mb-3" type="email" placeholder="Email"> </div>
+                    <div class="col-12">
+                        <label>Why should you be hired for this role?</label>
+                        <textarea name="comment" class="form-control mb-3">Enter text here...</textarea></div>
+                        <label>Upload your Resume Here</label>
+                <div class="col-12">
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    
+                </div>
+            </form>--->
+            
+        </div>
+    </div>
+</div>
+</section>
+
+  {% endblock %}

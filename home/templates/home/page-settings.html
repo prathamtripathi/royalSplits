@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main>  
+    <header id="header" class="d-flex align-items-center">
+        <a href="{% url 'home' %}" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+        <div class="container d-flex align-items-center justify-content-between">
+          <h1 class="logo"><a href="{% url 'home' %}" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+          <nav id="navbar" class="navbar">
+            <ul>
+               <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#about">Why Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'blog_list' %}">Our Blogs</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Product</a></li>
+              
+              
+                      {% if user.is_authenticated %}
+                  <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+                    <form id="logout" method="POST" action="{% url 'logout' %}">
+                     {% csrf_token %}
+                     <input type="hidden" />
+                     </form>
+                 <a class="nav-link scrollto" href="" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+             {% else %} 
+                <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+           <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+            {% endif %} 
+              
+              <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                      <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                        <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                        <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                         <li><a class="nav-link scrollto" href="{% url 'tnc' %}#instruct">Instruction</a></li>
+                        {% if user.is_authenticated %}
+                          <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                          {% endif %} 
+                        <li><a class="nav-link scrollto" href="{% url 'page_404' %}">Page 404</a></li>
+                        <li><a class="nav-link scrollto" href="{% url 'page_500' %}">Page 500</a></li>
+                        <li><a class="nav-link scrollto" href="{% url 'page_career' %}">Join Us</a></li>
+                        <li><a class="nav-link scrollto" href="{% url 'maintain' %}">Maintainance Page</a></li>
+                    </ul>
+              </li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+          </nav><!-- .navbar -->
+      </header>
+
+           
+            <!-- /.znav-container-->
+            <section class="font-1 color-10">
+                <div class="container">
+                    
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3">
+                            <div class="row font-1">
+                                <div class="col text-center text-lg-left">
+                                    <a href="{% static 'assets/images/portraits/square/03.jpg' %}" data-lightbox="profile-pic">
+                                        <img class="img-thumbnail radius-primary" src="{% static 'assets/images/portraits/square/03.jpg' %}" width="320">
+                                    </a>
+                                    <h5 class="mb-0 mt-3">{{profile.fname}} {{ profile.lname }}</h5>
+                                    <p class="mb-0">{{profile.bio}}</p>
+                                    <p class="mb-0">{{profile.location}}</p>
+                                    <hr class="color-9">
+                                    <div class="fs--1 fw-600">
+                                        <a class="d-block mb-2" href="#">Password</a>
+                                        <a class="color-danger fw-400 d-block mb-2" href="{% url 'remove_account' %}">Delete Account</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-9 pl-lg-5">
+                            <div class="row">
+                                <div class="col-lg-8 mt-5 mt-lg-0">
+                                    <h4 class="color-white mb-2">Profile Settings</h4>
+                                    <p class="color-5">Here we need some of your information before setting up your account. Make sure the details are filled correctly.</p>
+                                </div>
+                            </div>
+                            <form class="mt-5 row" action="{% url 'profile_setting' %}" method="post">
+                                {% csrf_token %}
+                                <div class="col-md-6">
+                                    {{form.fname}} </div>
+                                <div class="col-md-6">
+                                     {{form.lname}}</div>
+                                <div class="col-12">
+                                    {{form.website}} </div>
+                                <div class="col-12">
+                                    {{form.location}} </div>
+                                <div class="col-12">
+                                    {{form.bio}}</textarea>
+                                </div>
+                                <div><button class="btn btn-success" type="submit">Save changes</button></div>
+                            </form>
+                            
+                        </div>
+                    </div>
+                    <!--/.row-->
+                </div>
+                <!--/.container-->
+            </section>
+            <footer class="background-1 color-8 py-3 fs--1 fw-600 font-heading">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-auto font-1">&copy; 2015 Royal Spilts &trade;</div>
+                        <div class="col fs-0 text-right">
+                            <a class="p-2 color-8" href="#">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a class="p-2 color-8" href="#">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a class="p-2 color-8" href="#">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                            <a class="p-2 color-8" href="#">
+                                <i class="fa fa-behance"></i>
+                            </a>
+                            <a class="p-2 color-8" href="#">
+                                <i class="fa fa-dribbble"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </main>
+
+        {% endblock %}

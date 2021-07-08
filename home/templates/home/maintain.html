@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<header id="header" class="d-flex align-items-center">
+  <a href="{% url 'home' %}" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+  <div class="container d-flex align-items-center justify-content-between">
+    <h1 class="logo"><a href="{% url 'home' %}" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+    <nav id="navbar" class="navbar">
+      <ul>
+         <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#about">Why Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'blog_list' %}">Our Blogs</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Product</a></li>
+        
+        
+                {% if user.is_authenticated %}
+            <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+              <form id="logout" method="POST" action="{% url 'logout' %}">
+               {% csrf_token %}
+               <input type="hidden" />
+               </form>
+           <a class="nav-link scrollto" href="{% url 'cart' %}" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+       {% else %} 
+          <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+     <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+      {% endif %} 
+        
+        <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                   <li><a class="nav-link scrollto" href="{% url 'tnc' %}#instruct">Instruction</a></li>
+                  {% if user.is_authenticated %}
+                          <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                          {% endif %} 
+                  <li><a class="nav-link scrollto" href="{% url 'page_404' %}">Page 404</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'page_500' %}">Page 500</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'page_career' %}">Join Us</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'maintain' %}">Maintainance Page</a></li>
+              </ul>
+        </li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+</header>
+
+<!-- /.container-->
+</div>
+<!-- /.znav-container-->
+<section class="py-0 font-1 color-10">
+<div class="notfound">
+    <div class="row align-items-center text-center h-full">
+        <div class="col">
+            <img src="https://img.icons8.com/nolan/64/service.png"/>
+            <h2 class="mb-4 ">Page Under Maintainance!!</h2>
+            <p class="lead">Sorry for the inconvenience but we're performing some maintainance at the moment. If you need to you can always contact us, otherwise we'll be back online shortly !!</p>
+            <p class="lead">- Royal Splits team</p>
+            <a class="btn btn-info mt-3" href="{% url 'home' %}">Take me Home</a>
+        </div>
+    </div>
+</div>
+<!--/.container-->
+</section>
+<style>
+  .notfound{
+    padding: 50px;
+    font-family: "Raleway", sans-serif;
+  }
+  @media (max-width: 768px) {
+  .notfound {
+    padding: 0px;
+    margin:50px;
+  }
+  h2{
+    font-size: 30px;
+  }
+}
+.notfound img{
+    width: 15%; 
+    margin-bottom: 20px;
+  }
+  @media (max-width: 768px) {
+  .notfound img{
+    width:100%; 
+    margin-bottom: 20px;
+  }
+}
+</style>
+
+{% endblock %}

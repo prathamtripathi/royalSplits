@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<header id="header" class="d-flex align-items-center">
+  <a href="{% url 'home' %}" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+  <div class="container d-flex align-items-center justify-content-between">
+    <h1 class="logo"><a href="{% url 'home' %}" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+    <nav id="navbar" class="navbar">
+      <ul>
+         <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#about">Why Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'blog_list' %}">Our Blogs</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Product</a></li>
+        
+        
+                {% if user.is_authenticated %}
+            <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+              <form id="logout" method="POST" action="{% url 'logout' %}">
+               {% csrf_token %}
+               <input type="hidden" />
+               </form>
+           <a class="nav-link scrollto" href="{% url 'cart' %}" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+       {% else %} 
+          <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+     <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+      {% endif %} 
+        
+        <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                   <li><a class="nav-link scrollto" href="{% url 'tnc' %}#instruct">Instruction</a></li>
+                  {% if user.is_authenticated %}
+                          <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                          {% endif %} 
+                  <li><a class="nav-link scrollto" href="{% url 'page_404' %}">Page 404</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'page_500' %}">Page 500</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'page_career' %}">Join Us</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'maintain' %}">Maintainance Page</a></li>
+              </ul>
+        </li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+</header>
+
+  
+   <!-- ======= About Section ======= -->
+   <section id="about1" class="about">
+    <div class="container">
+      <center>
+        <button class="flow"><a href="{% url 'contact' %}"><img src="{% static 'assets/img//Product/PRODUCT/description/join.png' %}" style="width: 200px;"></a></button>
+          <button class="flow"><a href="{% url 'contact' %}"><img src="{% static 'assets/img/logo.gif' %}" ></a></button>
+          <button class="flow"><a href="{% url 'contact' %}"><img src="{% static 'assets/img//Product/PRODUCT/description/join.png' %}" style="width: 200px;"></a></button>
+      </center>
+        <div class="nine">
+            <h1>Terms and Condition<span>None Higher</span></h1>
+          </div>
+      <div class="row">
+        <div class="col-lg-12 pt-12 pt-lg-12 order-12 order-lg-12 content color-10" data-aos="fade-right">
+
+        <p class="fst-italic"><i class="bi bi-exclamation-triangle-fill" style="color: rgb(255, 34, 34); font-size: 20px;"></i> IMPORTANT: PLEASE READ THE FOLLOWING TERMS AND CONDITIONS CAREFULLY. THEY CONTAIN IMPORTANT INFORMATION ABOUT YOUR RIGHTS AND OBLIGATIONS, AS WELL AS LIMITATIONS AND EXCLUSIONS THAT APPLY TO YOUR PURCHASES. </p>
+        <ul>
+            <h2 style="font-weight: 400;">Product Availability:</h2>
+            <li style="margin-bottom: 20px; font-size: 20px; "><i class="bi bi-lightbulb-fill"></i> Royal Splits cannot guarantee product availability and products. Items may not be available for immediate delivery. Royal Splits reserves the right, without liability or prior notice, to revise, discontinue, or cease to make available any or all products or to cancel any order. </li>
+            <h2 style="font-weight: 400;">Typographical Errors</h2>
+            <li style="margin-bottom: 20px; font-size: 20px;"><i class="bi bi-lightbulb-fill"></i> Royal Splits strives to make every piece of information as accurate as possible. In the event a product is listed at an incorrect price or with incorrect information due to typographical error or error in pricing or product information, we shall have the right to refuse or cancel any orders placed for products listed at the incorrect price. Royal Splits shall have the right to refuse or cancel any such orders whether or not the order has been confirmed and your credit card has been charged. If your credit card has already been charged for the purchase and your order is canceled by Royal Splits Inc., Royal Splits shall immediately issue a credit to your credit card account in the amount of the charge.</li>
+            <h2 style="font-weight: 400;">Payment and Importation</h2>
+            <li style="margin-bottom: 20px; font-size: 20px;"><i class="bi bi-lightbulb-fill"></i> Import duties and local taxes are NOT included in the quoted price of goods being delivered to any locations. You will be responsible for the paying of any and all import duties and local taxes including any administration charges upon receipt.</li>
+            <h2 style="font-weight: 400;">Return Policy</h2>
+            <li><i class="bi bi-lightbulb-fill"></i> All sales are final. No refunds. Royal Splits, Inc. will repair or replace products at our discretion. All shipping costs for returns are the responsibility of the customer. </li>
+            <li style="margin-bottom: 20px; font-size: 20px;"><i class="bi bi-lightbulb-fill"></i> The Royal Splits Online Store is available to customers in the continental United States only.  Any customers outside of the continental United States seeking to purchase our products shall contact our sales office to arrange custom shipping charges. Please understand that shipping costs may vary state to state, region to region, and country to country and is the sole responsibility of the consumer. Customer shall bear any return shipping costs.</li>
+            <h2 style="font-weight: 400;">We recommend that</h2>
+            <li><i class="bi bi-patch-check-fill"></i> Use a carrier that offers shipment tracking for all returns  </li>
+            <li><i class="bi bi-patch-check-fill"></i> Either insure your package for safe return to Royal Splits or declare the full value of the shipment so that you are completely protected if the shipment is lost or damaged in transit.<b> If you choose not to then:</b></li>
+            <li style="margin-left: 100px; font-size: 20px;"><i class="bi bi-list-ol"></i> Use a carrier that offers tracking.</b></li>
+            <li style="margin-bottom:20px;font-size: 20px; margin-left: 100px;"><i class="bi bi-list-ol"></i> Insure or declare the full value of the product, you will be responsible for any loss or damage to the product during shipping.</b></li>
+            <h2 style="font-weight: 400;font-size: 20px;">Online Store Private Policy</h2>
+            <li><i class="bi bi-lightbulb-fill"></i> Royal Splits respects your privacy and we are committed to protecting it. We believe in keeping your information confidential. We only collect information from you when you specifically and knowingly provide such information. Any information we collect is used for the purpose of providing you with a more satisfying and personalized shopping and browsing experience.   </li>
+            <li style="margin-bottom: 20px;font-size: 20px;"><i class="bi bi-lightbulb-fill"></i> Royal Splits does not share, sell or rent any personal information to other companies or third parties.</li>
+            <li style="margin-bottom: 20px;font-size: 20px;"><i class="bi bi-patch-check-fill"></i> The Royal Splits Online Store collects and uses information in the following ways:   Order Fulfillment - When you order from our site, we request your, name, email address, mailing address, telephone number, credit card number and expiration date. This information allows us to process, fulfill and alert you to the status of your order.  </li>
+            <li style="margin-bottom: 20px;font-size: 20px;"><i class="bi bi-patch-check-fill"></i> We may use this information about your purchases to enhance your shopping experience by notifying you of special promotions, functionality changes and new services that we think you will find valuable. You may choose to remove yourself from this list at any time by unsubscribing from our email broadcasts at any time. We may also monitor customer traffic patterns and site usage to help us develop the design and layout that best suits our customers. </li>
+            <li style="margin-bottom: 20px;font-size: 20px;"><i class="bi bi-patch-check-fill"></i> Royal Splits is very protective of the privacy of its customers. If at any time we are required by law or by a legal process to release customer information, we must cooperate fully. </li>
+            <li style="margin-bottom: 20px;font-size: 20px;"><i class="bi bi-patch-check-fill"></i> Royal Splits reserves the right to change, alter or revise any part of our policies at any time with or without prior notice. </li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="instruct" class="about">
+    <div class="container">
+        <div class="nine">
+            <h1>Instructions <span>None Higher</span></h1>
+          </div>
+      <div class="row color-10">
+        <div class="col-lg-12 pt-12 pt-lg-12 order-12 order-lg-12 content" data-aos="fade-right">
+        <div class="container d-flex align-items-center" style="justify-content: center;">
+        <h2 ><h2>
+        </div>
+        <ul>
+            <h2 style="font-weight: 400; margin-top: 30px;">For Royal Splits blunt box and adaptor:</h2>
+            <li><i class="bi bi-arrow-right-circle-fill" ></i> For Blunts, remove the adaptor.</li>
+            <li style="margin-bottom: 100px;"><i class="bi bi-arrow-right-circle-fill" ></i> For Cigarillo or Mini Cigarillo, insert the adaptor.</li>
+            <h2 style="font-weight: 400;">For Blunt, Cigarillo, Mini Cigarillo</h2>
+            <li style="font-size: 20px;"><i class="bi bi-arrow-right-circle-fill"></i> Hold your Royal Splits blunt box and insert cigar.</li>
+            <li style="font-size: 20px;"><i class="bi bi-arrow-right-circle-fill"></i> Push the cigar through the chamber until the cigar comes through the back side of the Blunt Box about an inch. </li>
+            <li style="font-size: 20px;"><i class="bi bi-arrow-right-circle-fill"></i> Pull the cigar the rest of the way through the blunt box.</li>
+            <li style="font-size: 20px;"><i class="bi bi-arrow-right-circle-fill"></i> A perfect split with the cigar still inside the wrapper.</li>
+            <li style="font-size: 20px;"><i class="bi bi-arrow-right-circle-fill"></i> Remove the wrapper when you are ready to roll.</li>
+            <li style="font-size: 20px;"><i class="bi bi-arrow-right-circle-fill"></i> A perfect split with leaf intact.</li>
+            <li style="font-size: 20px;"><i class="bi bi-arrow-right-circle-fill"></i> Remove tobacco and the result is an unblemished casing.</li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </section><!-- End About Section -->
+  <footer class="background-1 color-8 py-3 fs--1 fw-600 font-heading">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-auto font-1">&copy; 2015 Royal Spilts &trade;</div>
+            <div class="col fs-0 text-right">
+                <a class="p-2 color-8" href="#">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="p-2 color-8" href="#">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="p-2 color-8" href="#">
+                    <i class="fa fa-instagram"></i>
+                </a>
+                <a class="p-2 color-8" href="#">
+                    <i class="fa fa-behance"></i>
+                </a>
+                <a class="p-2 color-8" href="#">
+                    <i class="fa fa-dribbble"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
+ {% endblock %}

@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<header id="header" class="d-flex align-items-center">
+    <a href="{% url 'home' %}" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+    <div class="container d-flex align-items-center justify-content-between">
+      <h1 class="logo"><a href="{% url 'home' %}" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+      <nav id="navbar" class="navbar">
+        <ul>
+           <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#about">Why Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'blog_list' %}">Our Blogs</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Product</a></li>
+          
+          
+                  {% if user.is_authenticated %}
+              <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+                <form id="logout" method="POST" action="{% url 'logout' %}">
+                 {% csrf_token %}
+                 <input type="hidden" />
+                 </form>
+             <a class="nav-link scrollto" href="{% url 'cart' %}" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+         {% else %} 
+            <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+       <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+        {% endif %} 
+          
+          <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+                <ul>
+                  <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                     <li><a class="nav-link scrollto" href="{% url 'tnc' %}#instruct">Instruction</a></li>
+                    {% if user.is_authenticated %}
+                          <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                          {% endif %} 
+                    <li><a class="nav-link scrollto" href="{% url 'page_404' %}">Page 404</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'page_500' %}">Page 500</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'page_career' %}">Join Us</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'maintain' %}">Maintainance Page</a></li>
+                </ul>
+          </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+  </header>
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="section-title">
+        <img src="https://img.icons8.com/dusk/64/000000/find-user-male.png"/ width="120">
+        <h2 style="font-family: 'Dancing script', cursive; text-transform: capitalize; font-size: 80px; font-weight: 400;">Find Us</h2>
+      </div>
+
+      <div class="row" data-aos="fade-up">
+        <div class="col-lg-4 col-md-6">
+          <div class="info-box mb-4">
+            <i class="bx bx-map"></i>
+            <h3>Our Address</h3>
+            <p>A108 Adam Street, New York, NY 535022</p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+          <div class="info-box  mb-4">
+            <i class="bx bx-envelope"></i>
+            <h3>Email Us</h3>
+            <p>contact@example.com</p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+          <div class="info-box  mb-4">
+            <i class="bx bx-phone-call"></i>
+            <h3>Call Us</h3>
+            <p>+1 5589 55488 55</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row color-10" data-aos="fade-up">
+      <h2 class="text-center pad-section">Our Whole Salers</h2>  
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Whole Saler Name
+            <th>Address
+            <th>Email</th>
+            <th>Phone Number</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1
+            <td>Malcolm
+            <td>Reynolds
+            <td>abc@gmail.com</td>
+            <td>1234567890</td>
+          <tr>
+            <td>2
+            <td>Zoe
+            <td>Hello</td>
+            <td>abc@gmail.com</td>
+            <td>1234567890</td>
+          <tr>
+            <td>3
+            <td>Hoban
+            <td>Washburn
+              <td>abc@gmail.com</td>
+            <td>1234567890</td>
+          <tr>
+            <td>4
+            <td>Kaylee
+            <td>Frye
+              <td>abc@gmail.com</td>
+            <td>1234567890</td>
+        </tbody>
+      </table>
+      </div>
+      <div class="row color-10" data-aos="fade-up">
+      <h2 class="text-center pad-section">Our Main Offices</h2>  
+      <div class="projects-wrapper">
+  
+      <div class="proj-box-format" data-aos="fade-up">
+        <iframe class="mb-4 mb-lg-0" id="scaled-frame"  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen align="middle" seamless allowfullscreen></iframe>
+        <div class="text-center">
+          <h3 style="font-family: 'Raleway', sans-serif; font-size: 25px; margin-top: 10px;">Office A</h3>
+        </div>  
+        </div>
+      <div class="proj-box-format" data-aos="fade-up">
+          <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3606.505788591216!2d83.012636315012!3d25.32080338383884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e2f3e44a13c4f%3A0xd410d1b31b3fa6f0!2sWeb%20Developer%20Rajat%20Agrawal!5e0!3m2!1sen!2sin!4v1623608614506!5m2!1sen!2sin" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen align="middle" seamless allowfullscreen></iframe>
+          <div class="text-center">
+            <h3 style="font-family: 'Raleway', sans-serif; font-size: 25px; margin-top: 10px;">Office B</h3>
+          </div>  
+      </div>
+      <div class="proj-box-format" data-aos="fade-up">
+          <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.3902503882173!2d78.03992911437199!3d27.17546875527249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3974775a18f3ef9d%3A0x6b2956b3b8313ea5!2sTaj%20mahal!5e0!3m2!1sen!2sin!4v1623609121890!5m2!1sen!2sin" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen align="middle" seamless allowfullscreen></iframe>
+          <div class="text-center">
+            <h3 style="font-family: 'Raleway', sans-serif; font-size: 25px; margin-top: 10px;">Office C</h3>
+          </div>  
+        </div>
+  </div>
+</div>
+</div>  
+
+</section>
+<!-- End Contact Section -->
+<footer class="background-1 color-8 py-3 fs--1 fw-600 font-heading">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-auto font-1">&copy; 2015 Royal Splits &trade; Inc. </div>
+            <div class="col fs-0 text-right">
+                <a class="p-2 color-8" href="#">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="p-2 color-8" href="#">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="p-2 color-8" href="#">
+                    <i class="fa fa-instagram"></i>
+                </a>
+                <a class="p-2 color-8" href="#">
+                    <i class="fa fa-behance"></i>
+                </a>
+                <a class="p-2 color-8" href="#">
+                    <i class="fa fa-dribbble"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer><!-- End Footer -->
+<style>
+    .projects-wrapper {
+         max-width: 980px;
+         position: relative;
+         margin: 0 auto;
+         border: 0px solid pink;
+         border: 0px solid black;
+    
+     }
+ 
+     .proj-box-format {
+         float: left;
+         height: 200px;
+         width: 30%;
+         border: 2px groove pink;
+         margin: 10px;
+         
+     }
+ 
+     iframe {
+         width: 100%;
+         height: 100%;
+     }
+ 
+     .clearfix:before,
+     .clearfix:after {
+         content: " "; /* 1 */
+         display: table; /* 2 */
+     }
+ 
+     @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+ 
+ *, *:before, *:after {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+ }
+ 
+ table {
+   background: #a51414;
+   border-radius: 0.25em;
+   border-collapse: collapse;
+   margin: 1em;
+ }
+ th {
+   border-bottom: 1px solid #364043;
+   color: #E2B842;
+   font-size: 0.85em;
+   font-weight: 600;
+   padding: 0.5em 1em;
+   text-align: left;
+ }
+ td {
+   color: #fff;
+   font-weight: 400;
+   padding: 0.65em 1em;
+ }
+ .disabled td {
+   color: #ff5151;
+ }
+ tbody tr {
+   transition: background 0.25s ease;
+ }
+ tbody tr:hover {
+   background: #550101e0;
+ }
+ 
+ 
+ </style>
+
+  {% endblock %}

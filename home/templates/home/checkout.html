@@ -1,0 +1,432 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+body {
+  font-family: Arial;
+  font-size: 17px;
+  background: linear-gradient(#000000,#2d3436);
+  padding: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+.containers {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-containers {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+a {
+  color: #2196F3;
+}
+
+hr {
+  border: 1px solid lightgrey;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+.navbar {
+  padding: 0;
+}
+
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display:flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+}
+
+.navbar  li > ul {
+  margin-left: 5px;
+}
+
+
+.navbar a {
+  display: flex;
+  font-weight: 400;
+  font-family: 'Archivo', sans-serif;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 15px 24px 15px;
+  font-size: 15px;
+  color: #fff;
+  white-space: nowrap;
+  transition: 0.3s;
+}
+
+.navbar a i {
+  font-size: 12px;
+  line-height: 0;
+  margin-left: 5px;
+}
+
+.navbar a:hover, .navbar .active, .navbar li:hover > a {
+  background: #cc1616;
+}
+
+.navbar .dropdown ul {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 30px);
+  margin: 0;
+  padding: 10px 0;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  transition: 0.3s;
+}
+
+.navbar .dropdown ul li {
+  min-width: 200px;
+}
+
+.navbar .dropdown ul a {
+  padding: 10px 20px;
+  color: #191919;
+}
+
+.navbar .dropdown ul a i {
+  font-size: 12px;
+}
+
+.navbar .dropdown ul a:hover, .navbar .dropdown ul .active:hover, .navbar .dropdown ul li:hover > a {
+  color: #fff;
+}
+
+.navbar .dropdown:hover > ul {
+  opacity: 1;
+  top: 100%;
+  visibility: visible;
+}
+
+.navbar .dropdown .dropdown ul {
+  top: 0;
+  left: calc(100% - 30px);
+  visibility: hidden;
+}
+
+.navbar .dropdown .dropdown:hover > ul {
+  opacity: 1;
+  top: 0;
+  left: 100%;
+  visibility: visible;
+}
+
+@media (max-width: 1366px) {
+  .navbar .dropdown .dropdown ul {
+    left: -90%;
+  }
+  .navbar .dropdown .dropdown:hover > ul {
+    left: -100%;
+  }
+}
+
+/**
+* Mobile Navigation 
+*/
+.mobile-nav-toggle {
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+  line-height: 0;
+  transition: 0.5s;
+}
+
+.mobile-nav-toggle.bi-x {
+  color: #cc1616;
+}
+
+@media (max-width: 991px) {
+  .mobile-nav-toggle {
+    display: inline-block;
+  }
+  .navbar ul {
+    display: none;
+  }
+}
+
+.navbar-mobile {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  transition: 0.3s;
+  z-index: 999;
+}
+
+.navbar-mobile .mobile-nav-toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.navbar-mobile ul {
+  display: block;
+  position: absolute;
+  top: 55px;
+  right: 15px;
+  bottom: 15px;
+  left: 15px;
+  padding: 10px 0;
+  background-color: #fff;
+  overflow-y: auto;
+  transition: 0.3s;
+}
+
+.navbar-mobile a {
+  padding: 10px 20px;
+  font-size: 15px;
+  color: #191919;
+}
+.navbar-mobile a:hover, .navbar-mobile .active, .navbar-mobile li:hover > a {
+  color: #cc1616;
+  background: none;
+}
+
+.navbar-mobile .getstarted {
+  margin: 15px;
+}
+
+.navbar-mobile .dropdown ul {
+  position: static;
+  display: none;
+  margin: 10px 20px;
+  padding: 10px 0;
+  z-index: 99;
+  opacity: 1;
+  visibility: visible;
+  background: #fff;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+}
+
+.navbar-mobile .dropdown ul li {
+  min-width: 200px;
+}
+
+.navbar-mobile .dropdown ul a {
+  padding: 10px 20px;
+}
+
+.navbar-mobile .dropdown ul a i {
+  font-size: 12px;
+}
+
+.navbar-mobile .dropdown ul a:hover, .navbar-mobile .dropdown ul .active:hover, .navbar-mobile .dropdown ul li:hover > a {
+  color: #cc1616;
+}
+
+.navbar-mobile .dropdown > .dropdown-active {
+  display: block;
+}
+
+</style>
+<header id="header" class="d-flex align-items-center">
+    <a href="{% url 'home' %}" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+    <div class="container d-flex align-items-center justify-content-between">
+      <h1 class="logo"><a href="{% url 'home' %}" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+      <nav id="navbar" class="navbar">
+        <ul>
+           <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'home' %}#about">Why Us</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'blog_list' %}">Our Blogs</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Product</a></li>
+          
+          
+                  {% if user.is_authenticated %}
+              <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+                <form id="logout" method="POST" action="{% url 'logout' %}">
+                 {% csrf_token %}
+                 <input type="hidden" />
+                 </form>
+            
+         {% else %} 
+            <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+       <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+        {% endif %} 
+        <a class="nav-link scrollto" href="{% url 'cart' %}" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+                 
+          <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+                <ul>
+                  <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                     <li><a class="nav-link scrollto" href="{% url 'tnc' %}#instruct">Instruction</a></li>
+                     {% if user.is_authenticated %}
+                    <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                    {% endif %} 
+                    <li><a class="nav-link scrollto" href="{% url 'page_404' %}">Page 404</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'page_500' %}">Page 500</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'page_career' %}">Join Us</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'findus' %}">Find Us</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'maintain' %}">Maintainance Page</a></li>
+                </ul>
+          </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>  
+  </header>
+<section>
+<center><img src="https://img.icons8.com/wired/64/ffffff/checkout.png" style="margin-bottom: 20px; width: 70px;"/></center>
+<h1 style="color: white; text-align:center; font-family: 'Caladea', serif;;">Check Out</h1>
+<h2 style="color: white; text-align:center; font-family: 'Andika', sans-serif; margin-bottom: 100px;">Please fill all the details properly to place the order.</h2>
+<div class="row">
+  <div class="col-75" style="padding: 20px;">
+    <div class="containers" style="padding: 20px; margin-left: 20px; margin-right: 20px;">
+      <form action="{% url 'checkout' %}" method="post">
+        {% csrf_token %}
+        <div class="row ">
+          <div class="col-50 ">
+            <h3>Shipping Address</h3>
+            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+            <!--<input type="text" id="fname" name="firstname" placeholder="John M. Doe">-->
+            {{form.name}}
+            <label for="email"><i class="fa fa-envelope"></i> Email</label>
+            
+            {{form.email}}
+            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+            
+            {{form.address}}
+            <label for="city"><i class="fa fa-institution"></i> City</label>
+            
+            {{form.country}}
+
+            <div class="row">
+              <div class="col-50">
+                <label for="state">State</label>
+                
+                {{form.state}}
+              </div>
+              <div class="col-50">
+                <label for="zip">Zip</label>
+                
+                {{form.zip_code}}
+              </div>
+            </div>
+          </div>
+
+          
+          
+        </div>
+        <label>
+          
+        </label>
+        <p style="font-size: 30px;font-weight: 20px;">Payment Method</p>
+        <label>
+          {{form.payment_option}} 
+        </label>
+        <input type="submit" value="Continue to checkout" class="btn">
+      </form>
+    </div>
+  </div>
+  <div class="col-25">
+    <div class="containers"  style="padding: 20px;margin-top: 20px;">
+      <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>{{ order.items.count }}</b></span></h4>
+      {% for order_item in items %}
+      <p><a href="#" style="color:black">{{order_item.quantity}}x{{ order_item.product.title }}</a> <span class="price" style="color:black">${{ order_item.get_total}}</span></p>
+      
+      {% endfor %}
+      <hr>
+      <p>Total <span class="price" style="color:black"><b>${{ order.get_cart_total }}</b></span></p>
+    </div>
+  </div>
+                                
+  </div>
+</div>
+</section>
+{% endblock %}

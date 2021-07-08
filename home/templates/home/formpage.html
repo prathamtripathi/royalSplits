@@ -1,0 +1,501 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .navbar {
+padding: 0;
+}
+
+
+.navbar ul {
+margin: 0;
+padding: 0;
+display:flex;
+list-style: none;
+align-items: center;
+}
+
+.navbar li {
+position: relative;
+}
+
+.navbar  li > ul {
+margin-left: 5px;
+}
+
+.navbar a {
+display: flex;
+font-weight: 400;
+font-family: 'Archivo', sans-serif;
+align-items: center;
+justify-content: space-between;
+padding: 25px 15px 24px 15px;
+font-size: 15px;
+color: #fff;
+white-space: nowrap;
+transition: 0.3s;
+}
+
+.navbar a i {
+font-size: 12px;
+line-height: 0;
+margin-left: 5px;
+}
+
+.navbar a:hover, .navbar .active, .navbar li:hover > a {
+background: #cc1616;
+}
+
+.navbar .dropdown ul {
+display: block;
+position: absolute;
+left: 0;
+top: calc(100% + 30px);
+margin: 0;
+padding: 10px 0;
+z-index: 99;
+opacity: 0;
+visibility: hidden;
+background: #fff;
+box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+transition: 0.3s;
+}
+
+.navbar .dropdown ul li {
+min-width: 200px;
+}
+
+.navbar .dropdown ul a {
+padding: 10px 20px;
+color: #191919;
+}
+
+.navbar .dropdown ul a i {
+font-size: 12px;
+}
+
+.navbar .dropdown ul a:hover, .navbar .dropdown ul .active:hover, .navbar .dropdown ul li:hover > a {
+color: #fff;
+}
+
+.navbar .dropdown:hover > ul {
+opacity: 1;
+top: 100%;
+visibility: visible;
+}
+
+.navbar .dropdown .dropdown ul {
+top: 0;
+left: calc(100% - 30px);
+visibility: hidden;
+}
+
+.navbar .dropdown .dropdown:hover > ul {
+opacity: 1;
+top: 0;
+left: 100%;
+visibility: visible;
+}
+
+@media (max-width: 1366px) {
+.navbar .dropdown .dropdown ul {
+  left: -90%;
+}
+.navbar .dropdown .dropdown:hover > ul {
+  left: -100%;
+}
+}
+
+/**
+* Mobile Navigation 
+*/
+.mobile-nav-toggle {
+color: #fff;
+font-size: 28px;
+cursor: pointer;
+display: none;
+line-height: 0;
+transition: 0.5s;
+}
+
+.mobile-nav-toggle.bi-x {
+color: #cc1616;
+}
+
+@media (max-width: 991px) {
+.mobile-nav-toggle {
+  display: inline-block;
+}
+.navbar ul {
+  display: none;
+}
+}
+
+.navbar-mobile {
+position: fixed;
+overflow: hidden;
+top: 0;
+right: 0;
+left: 0;
+bottom: 0;
+background: rgba(0, 0, 0, 0.9);
+transition: 0.3s;
+z-index: 999;
+}
+
+.navbar-mobile .mobile-nav-toggle {
+position: absolute;
+top: 15px;
+right: 15px;
+}
+
+.navbar-mobile ul {
+display: block;
+position: absolute;
+top: 55px;
+right: 15px;
+bottom: 15px;
+left: 15px;
+padding: 10px 0;
+background-color: #fff;
+overflow-y: auto;
+transition: 0.3s;
+}
+
+.navbar-mobile a {
+padding: 10px 20px;
+font-size: 15px;
+color: #191919;
+}
+.navbar-mobile a:hover, .navbar-mobile .active, .navbar-mobile li:hover > a {
+color: #cc1616;
+background: none;
+}
+
+.navbar-mobile .getstarted {
+margin: 15px;
+}
+
+.navbar-mobile .dropdown ul {
+position: static;
+display: none;
+margin: 10px 20px;
+padding: 10px 0;
+z-index: 99;
+opacity: 1;
+visibility: visible;
+background: #fff;
+box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+}
+
+.navbar-mobile .dropdown ul li {
+min-width: 200px;
+}
+
+.navbar-mobile .dropdown ul a {
+padding: 10px 20px;
+}
+
+.navbar-mobile .dropdown ul a i {
+font-size: 12px;
+}
+
+.navbar-mobile .dropdown ul a:hover, .navbar-mobile .dropdown ul .active:hover, .navbar-mobile .dropdown ul li:hover > a {
+color: #cc1616;
+}
+
+.navbar-mobile .dropdown > .dropdown-active {
+display: block;
+}
+</style>
+<header id="header" class="d-flex align-items-center">
+  <a href="{% url 'home' %}" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+  <div class="container d-flex align-items-center justify-content-between">
+    <h1 class="logo"><a href="{% url 'home' %}" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+    <nav id="navbar" class="navbar">
+      <ul>
+         <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#about">Why Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'blog_list' %}">Our Blogs</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Product</a></li>
+        
+        
+                {% if user.is_authenticated %}
+            <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+              <form id="logout" method="POST" action="{% url 'logout' %}">
+               {% csrf_token %}
+               <input type="hidden" />
+               </form>
+          
+       {% else %} 
+          <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+     <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+      {% endif %} 
+      <a class="nav-link scrollto" href="{% url 'cart' %}" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+               
+        <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                   <li><a class="nav-link scrollto" href="{% url 'tnc' %}#instruct">Instruction</a></li>
+                   {% if user.is_authenticated %}
+                  <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                  {% endif %} 
+                  <li><a class="nav-link scrollto" href="{% url 'page_404' %}">Page 404</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'page_500' %}">Page 500</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'page_career' %}">Join Us</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'findus' %}">Find Us</a></li>
+                  <li><a class="nav-link scrollto" href="{% url 'maintain' %}">Maintainance Page</a></li>
+              </ul>
+        </li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav>
+  <!-- .navbar -->
+  
+
+</header>
+<div class="mt-5 pt-4" style="overflow-hidden">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+
+  <section id="contact" class="contact">
+            <div class="container">
+              <div class="section-title color-10">
+                <h2 style="font-family: 'Courgette', cursive; text-transform: capitalize; font-size: 60px; font-weight: 400;">Wholesale / Distribution Order</h2>                
+                <p><i class="bi bi-exclamation-triangle-fill" style="color: rgb(255, 34, 34); font-size: 18px;"> </i>As the popularity of the Royal Splits Blunt Box has grown, there has been an increased demand from Independent Business Owners to become Royal Splits wholesale distributors. Applications are now being accepted for the Royal Splits Blunt Box Wholesale Distribution Program. If you are interested in joining our Wholesale Distribution program, please fill out the application below and click Submit.
+                </p>
+              </div>
+             
+                <div class="col-lg-6 color-10">
+                  <form action="{% url 'formpage'  %}" method="post" role="form" class="php-email-form">
+                    {% csrf_token %}
+                    <div class="form-group mt-3">
+                      <label for="name">Company Name:</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Company Name" required>
+                      </div>
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label for="Fname">Contact Person First Name:</label>
+                        <input type="text" name="Fname" class="form-control" id="Fname" placeholder="Contact Person First Name" required>
+                      </div>
+                      <div class="col-md-6 form-group mt-3 mt-md-0">
+                        <label for="LName">Contact Person Last Name:</label>
+                        <input type="text" name="Lname" class="form-control" id="Lname" placeholder="Contact Person Last Name" required>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                          <label for="title">Title in Company:</label>
+                          <input type="text" name="title" class="form-control" id="title" placeholder="Title in Company" required>
+                        </div>
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                          <label for="email">Email:</label>
+                          <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                        </div>
+                      </div>
+                    <div class="form-group mt-3">
+                      <label for="phone">Contact Number:</label>
+                      <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone Number" title="Enter a valid phone number"  required>
+                    </div>
+                    <div class="form-group mt-3">
+                      <label for="fax">Fax Number</label>
+                        <input type="text" class="form-control" name="fax" id="fax" placeholder="Fax Number" title="Enter a valid phone number"  required>
+                      </div>
+  
+                    <div class="form-group mt-3">
+                      <label for="items">Choose Product:</label>
+                    <select id="items" class="form-control" name="Products" required>
+                      <option value="Solid Neon Adaptor">Solid Neon Adaptor</option>
+                      <option value="Solid Neon Blunt Box">Solid Neon Blunt Box</option>
+                      <option value="Royal Splits Collection">Royal Splits Collection</option>
+                      <option value="Special Order">Special Order</option>
+                      <input type="number" class="form-control" name="Quantity" id="quantity" placeholder="Quantity" required>
+                    </div>
+                    </select>
+                      <div class="form-group mt-3">
+                    <label for="Address">Address:</label>
+                    <textarea class="form-control" name="msg" rows="2" placeholder="Address" id="Address" required></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                          <label for="city">City:</label>
+                          <input type="text" name="city" class="form-control" id="city" placeholder="City" required>
+                        </div>
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                          <label for="state">State:</label>
+                          <input type="text" class="form-control" name="State" id="state" placeholder="State" required>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 form-group">
+                          <label for="zip">ZIP:</label>
+                          <input type="text" name="zip" class="form-control" id="zip" placeholder="Zip" required>
+                        </div>
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                          <label for="country">Country:</label>
+                          <input type="text" class="form-control" name="country" id="country" placeholder="Country" required>
+                        </div>
+                      </div >
+                      <div class="row">
+                        <div class="col-md-6 form-group">
+                          <label for="tax">Federal Tax ID:</label>
+                          <input type="text" name="tax" class="form-control" id="tax" placeholder="Federal Tax ID" required>
+                        </div>
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                          <label for="resell">Reseller's License Number:</label>
+                          <input type="text" class="form-control" name="resell" id="resell" placeholder="Reseller's License No." required>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-md-6 form-group">
+                          <label for="insta">Instagram ID:</label>
+                          <input type="text" name="insta" class="form-control" id="insta" placeholder="Instagram ID" required>
+                        </div>
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                          <label for="facebbok">Facebook ID:</label>
+                            <input type="text" name="facebook" class="form-control" id="facebook" placeholder="FaceBook ID" required>
+                        </div>
+                        <div class="form-group mt-3">
+                          <label for="items2">Preferred Shipping Address</label>
+                            <select id="items2" class="form-control" name="Products1" required> 
+                              <option value="Solid Neon Adaptor">Residential Address</option>
+                              <option value="Solid Neon Blunt Box">Commercial Address</option>
+                            </div>
+                            <div class="form-group mt-3">
+                              <label for="ms2">Address:</label>
+                             <textarea class="form-control" name="ms2" rows="5" placeholder="Address" id="ms2" required></textarea>
+                            </div>   
+                            <div class="col-md-6 form-group">
+                              <label for="city1">City:</label>
+                                <input type="text" name="city1" class="form-control" id="city1" placeholder="City" required>
+                              </div>
+                              <div class="col-md-6 form-group mt-3 mt-md-0">
+                                <label for="state1">State:</label>
+                                <input type="text" class="form-control" name="State1" id="state1" placeholder="State" required>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6 form-group">
+                                <label for="zip1">ZIP:</label>
+                                <input type="text" name="zip1" class="form-control" id="zip1" placeholder="Zip" required>
+                              </div>
+                              <div class="col-md-6 form-group mt-3 mt-md-0">
+                                <label for="country1">Country:</label>
+                                <input type="text" class="form-control" name="country1" id="country1" placeholder="Country" required>
+                              </div> 
+                            </div>    
+                              <div class="row">
+                                <div class="form-group mt-3">
+                                  <label for="name11">Contact Person Name</label>
+                                    <input type="text" name="name1" class="form-control" id="name11" placeholder="Contact Person Name" required>
+                                  </div>
+                                <div class="form-group mt-3">
+                                  <label for="phone11">Contact Number:</label>
+                                    <input type="text" class="form-control" name="phone11" id="phone1" placeholder="Phone Number" title="Enter a valid phone number" required>
+                                </div>  
+                              </div>
+                              <u><h2 style="margin-top: 50px;">Payment Details (Optional)</h2></u>
+                              <div class="form-group mt-3">
+                                <label for="name">Credit Card Type:</label>
+                                  <input type="text" name="name" class="form-control" id="Credit Card Type" placeholder="Credit Card Type">
+                                </div>
+                              <div class="row">
+                                <div class="col-md-6 form-group">
+                                  <label for="Fname">Cardholder's Name:</label>
+                                  <input type="text" name="Fname" class="form-control" id="Cardholder's Name" placeholder="Cardholder's Name" >
+                                </div>
+                                <div class="col-md-6 form-group mt-3 mt-md-0">
+                                  <label for="LName">Credit Card Number:</label>
+                                  <input type="text" name="Lname" class="form-control" id="Credit Card Number" placeholder="Credit Card Number">
+                                </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6 form-group">
+                                    <label for="title">Expiration Date:</label>
+                                    <input type="text" name="title" class="form-control" id="Expiration Date" placeholder="Expiration Date">
+                                  </div>
+                                  <div class="col-md-6 form-group mt-3 mt-md-0">
+                                    <label for="email">CVN (Card Verification Number)</label>
+                                    <input type="text" class="form-control" name="cvn" id="CVN (Card Verification Number)" placeholder="CVN (Card Verification Number):">
+                                  </div>
+                                </div>
+                                <div class="row">
+                                      <div class="form-group mt-3">
+                                        <label for="ms22">Billing Address:</label>
+                                       <textarea class="form-control" name="ms2" rows="5" placeholder="Address" id="ms22" ></textarea>
+                                      </div>   
+                                      <div class="col-md-6 form-group">
+                                        <label for="city1">Billing City:</label>
+                                          <input type="text" name="city1" class="form-control" id="city2" placeholder="City">
+                                        </div>
+                                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                                          <label for="state1">Billing State:</label>
+                                          <input type="text" class="form-control" name="State2" id="state1" placeholder="State">
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-md-6 form-group">
+                                          <label for="zip1">ZIP:</label>
+                                          <input type="text" name="zip1" class="form-control" id="zip2" placeholder="Zip">
+                                        </div>
+                                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                                          <label for="country1"> Billing Country:</label>
+                                          <input type="text" class="form-control" name="country1" id="country2" placeholder="Country">
+                                        </div> 
+                                      </div>
+                                           
+                    <input type="hidden" name="_honey" style="display:none">
+                    <input type="hidden" name="_autoresponse" value="Thank you for getting with us. We will get in touch with you soon.">
+                    <input type="hidden" name="_template" value="table">    
+                    <div class="my-3">
+                      <div class="loading">Loading</div>
+                    </div>
+                    <h3><i class="bi bi-exclamation-triangle-fill" style="color: rgb(255, 34, 34); font-size: 25px;"></i> Read Carefully:</h3>
+                    <p>1. By providing all information, applicant shall hold all responsibilities. Applicant acknowledges that this application is a non-binding contract between Royal Splits Wholesale and applicant, but understands this is a process to set up an account with Royal Splits Wholesale. There are no obligations or fees associated with this application. Royal Splits reserves the right to request any necessary information from customer to complete this application.</p>
+                    <p>2. All freight cost must be prepaid along with purchase order. Based on the preferred shipping destination, Royal Splits will determine the freight cost for individual order placed. Unless specified shipping destination is provided to Royal Splits at time of placing order, the above information shall serve as the default shipping location. Any changes in shipping location after shipment is processed shall be at the expense of the customer.</p>
+                    <p>3. By clicking "Submit Application" I hereby represent that I have the authority to execute this credit card authorization and agree that this authorization will be effective on this date for any orders placed with Royal Splits unless I provide notification to no longer charge this card. I understand and consent to the use of my credit card without my signature on the charge slip, that a photocopy or fax of this agreement will serve as original and this credit card authorization cannot be revoked.</p>
+                    <div class="text-center"><button type="submit">Submit Application</button></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section><!-- End Contact Section -->
+          <footer class="background-1 color-8 py-3 fs--1 fw-600 font-heading">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-auto font-1">&copy; 2015 The Royal Splits &trade; </div>
+                    <div class="col fs-0 text-right">
+                        <a class="p-2 color-8" href="#">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a class="p-2 color-8" href="#">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a class="p-2 color-8" href="#">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a class="p-2 color-8" href="#">
+                            <i class="fa fa-behance"></i>
+                        </a>
+                        <a class="p-2 color-8" href="#">
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer><!-- End Footer -->
+{% endblock %}

@@ -1,0 +1,416 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .btn-buynow {
+  font-family: "Raleway", sans-serif;
+  margin-top: 10%;
+  margin-left: 8%;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  display:inline-block;
+  text-align: center;
+  padding: 2px 15px;
+  transition: 0.5s;
+  border: 2px solid rgb(250, 250, 250);
+  color: black;
+  border-radius: 6px;
+
+}
+</style>
+
+
+<header id="header" class="d-flex align-items-center">
+    <a href="{% url 'home' %}" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+    <div class="container d-flex align-items-center justify-content-between">
+      <h1 class="logo"><a href="{% url 'home' %}" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#about">Why Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'blog_list' %}">Our Blogs</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Product</a></li>
+          
+          
+                  {% if user.is_authenticated %}
+              <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+                <form id="logout" method="POST" action="{% url 'logout' %}">
+                 {% csrf_token %}
+                 <input type="hidden" />
+                 </form>
+             
+         {% else %} 
+            <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+       <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+        {% endif %} 
+          <a class="nav-link scrollto" href="{% url 'cart' %}" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+          <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+                <ul>
+                  <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                     <li><a class="nav-link scrollto" href="{% url 'tnc' %}#instruct">Instruction</a></li>
+                    {% if user.is_authenticated %}
+                          <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                          {% endif %} 
+                    <li><a class="nav-link scrollto" href="{% url 'page_404' %}">Page 404</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'page_500' %}">Page 500</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'page_career' %}">Join Us</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'maintain' %}">Maintainance Page</a></li>
+                </ul>
+          </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+  </header>
+            <!-- /.znav-container-->
+            <hr class="color-9 m-0">
+            <div class="background-1">
+                <div class="container font-1 fs--1 py-1 color-6">
+                    <a href="#">Home </a>/
+                    <a href="#">Women's Clothing </a>/
+                    <a href="#">Tops </a>/ Cart</div>
+            </div>
+            <hr class="color-1 m-0">
+            <section class="pt-6 pb-4">
+                <div class="container">
+                    <h1 class="fs-2 color-10">Your Shopping Cart </h1>
+                    <!--/.row-->
+                </div>
+                <!--/.container-->
+            </section>
+            <section class="pt-0 font-1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="row">
+                                {% for order_item in items %}
+                                <div class="col-md-6 col-lg-12">
+                                    <div class="row border color-9 mb-3 py-3 mx-0">
+                                        <div class="col-lg-3">
+                                            <img class="w-100" src="{{ order_item.product.thumbnail_1.url }}">
+                                        </div>
+                                        <div class="col-lg-6 color-10">
+                                            <h5 class="fs-0">Details</h5>
+                                            <hr class="color-1">
+                                            <a href="#">
+                                                <p class="color-10 fs--1 fw-300">{{ order_item.product.title }}</p>
+                                            </a>
+                                            <div class="row fs--1">
+                                                <div class="col-3">
+                                                    <span class="fw-600 mr-3">Color :</span>
+                                                </div>
+                                                <div class="col-3">
+
+                                                    <form method="post" action="{% url 'color' order_item.product.id%}">
+                                                    {% csrf_token %}
+                                                    {{color.color}}
+                                                    {% if user.is_authenticated %}
+                                                    <button type="submit" style="text-decoration: none;border: none;background: none; color: inherit;border: none;padding: 0;font: inherit;cursor: pointer;outline: inherit;" ><a class="btn-buynow" style="cursor: pointer;"><input type="submit" value="Save" style="background: none;color: white; border: none;padding: 0; font: inherit;outline: inherit;"></a></button>
+                                                   {% endif %}
+                                                </form>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center">
+                                                <label class="col-3 mb-0" for="exampleInputName">Quantity :</label>
+                                                <div class="col-3">
+                                                    <a class="update-cart" data-product="{{order_item.product.id}}" data-action="remove" style="cursor: pointer;color:white;font-size: 30px;text-decoration: none;"> - </a>
+                                                    {{order_item.quantity}}
+                                                    <a class="update-cart" data-product="{{order_item.product.id}}" data-action="add" style="cursor: pointer;color:white;font-size: 30px;text-decoration: none;"> + </a>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="fs--1 mb-0 fw-600 color-10">US &dollar;{{ order_item.product.price }}
+                                                        <span class="color-9 fs--1 fw-400">/ piece</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 color-10">
+                                            <h5 class="fs-0">Price</h5>
+                                            <hr class="color-9">
+                                            <p class="mb-0">US &dollar;{{ order_item.get_total|floatformat:2 }}</p>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                {% if user.is_authenticated %}
+                                <div class="col-md-6 col-lg-12">
+                                    <div class="row border color-9 mb-3 py-3 mx-0">
+                                        
+                                        <center>Your cart is empty</center>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-12 px-0">
+                                    <a class="btn btn-danger btn-block mt-3" href="{% url 'home' %}#services">Continue Shopping</a>
+                                </div>
+                                {% else %}
+                                <div class="col-md-6 col-lg-12">
+                                    <div class="row border color-9 mb-3 py-3 mx-0">
+                                        
+                                        <center>Your cart is empty</center>
+                                         <div class="col-12 px-0">
+                                    <a class="btn btn-danger btn-block mt-3" href="{% url 'home' %}#services">Continue Shopping</a>
+                                </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-12 border color-9 align-self-start">
+                                    <p class="fw-600 my-3 color-10">You have {{order.count}} items in cart</p>
+                                    <hr class="color-9">
+                                    
+                                    
+                                    <div class="row color-10">
+                                        <div class="col-8">
+                                            <p class="mb-0">Sub Total:</p>
+                                        </div>
+                                        {% if order.coupon %}
+                                        <div class="col-4 text-right">
+                                            <p class="mb-0">&dollar;{{ order.get_sub_total|floatformat:2 }}</p>
+                                        </div>
+                                        {% else %}
+                                        <div class="col-4 text-right">
+                                            <p class="mb-0">&dollar;{{ order.get_cart_total|floatformat:2 }}</p>
+                                        </div>
+                                        {% endif %}
+                                        <div class="col-8">
+                                            <p class="mb-0">Promo code</p>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                           {% if order.coupon %}
+                                            <p class="mb-0">&dollar;{{order.coupon.amount}}</p>
+                                            {% else %}
+                                            <p class="mb-0">&dollar;0</p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-12">
+                                            <hr class="color-9 my-2"> </div>
+                                        <div class="col-8">
+                                            <p class="mb-0">Total:</p>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <p class="mb-0">&dollar;{{ order.get_cart_total|floatformat:2 }}</p>
+                                        </div>
+                                        <div class="col-8">
+                                            <p class="mb-0">Shipping:</p>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <p class="mb-0"><del>&dollar;16.67</del></p>
+                                            <p class="mb-0">Free!!</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <hr class="color-9 mt-2"> </div>
+                                        <div class="col-8">
+                                            <p class="fw-600 color-warning">Payable Total:</p>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <p class="fw-600 color-warning">&dollar;{{ order.get_cart_total|floatformat:2 }}</p>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-25">
+                                    
+                                    <div class="containers"  style="padding: 20px;margin-top: 10px;margin-left: 3px;">
+                                      <h4>Promo code </h4>
+                                      
+                                      <form method="post" action="{% url 'add_coupon' %}" style="margin-left:2px">
+                                           {% csrf_token %}
+                                           {{couponform.code}}
+                                           {% if user.is_authenticated %}                         
+                                        <input style="margin-top: 10px; padding:12px;border-style: solid;" class="btn btn-primary text-uppercase color-10" type ="submit" value="Apply">
+                                        {% else %}
+                                        <a href="{% url 'login' %}"><input style="margin-top: 10px; padding:12px;border-style: solid;" class="btn btn-primary text-uppercase color-10" value="Apply" ></a>
+                                        {% endif %}
+
+                                        
+                                      </form>
+                                      <hr>
+                                      
+                                    </div>
+                                  </div>
+                                <div class="col-12 px-0">
+                                    {% if user.is_authenticated %}
+                                    <a class="btn btn-danger btn-block mt-3" href="{% url 'checkout' %}">Purchase</a>
+                                    {% else %}
+                                    <a class="btn btn-danger btn-block mt-3" href="{% url 'signup' %}">Sign in/Log in</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.row-->
+                </div>
+                <!--/.container-->
+            </section>
+            <section class="pt-0 pb-4"> 
+                <div class="container">
+                    <h5 class="text-uppercase py-3 mb-0 color-10">Recommendations for you</h5>
+                    <div class="row">
+                        <div class="col-12">
+                            <hr class="my-0 color-danger" />
+                            <hr class="my-0 color-danger" /> </div>
+                        
+                        
+                        
+                        
+                        {% for it in prods.all %}
+                        <a class="col-lg-3 col-md-4 col-6 col-md-4 col-sm-6 color-1 mb-4" href="#">
+                            <div class="card radius-square" style="background-color: black;">
+                               <img class="card-img-top" src="{{ it.thumbnail_1.url }}" />
+                                <div class="card-block p-2">
+                                    <div class="row align-items-center mt-3">
+                                        <div class="col">
+                                            <h5 class="fs-0 d-inline-block mb-0 color-10">US &dollar;{{it.price}} </h5>
+                                            
+                                        </div>
+                                        <div class="col-5">
+                                            <h6 class="text-right fw-400 d-inline-block color-10">802 orders</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    <!--/.row-->
+                </div>
+                <!--/.container-->
+            </section>
+            <section class="background-11 py-0 text-center font-1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 py-5 px-xl-4 px-2">
+                            <span class="d-block mb-3 fs-5 color-danger icon-Dollar"></span>
+                            <h5 class="fw-400">174 Layouts</h5>
+                            <p class="color-5 mb-0 fs--1">Optimized for every screen size down to a single pixel.</p>
+                        </div>
+                        <div class="col-lg-3 col-md-6 py-5 px-xl-4 px-2">
+                            <span class="d-block mb-3 fs-5 color-danger icon-Plane-2"></span>
+                            <h5 class="fw-400">Multiverse Use</h5>
+                            <p class="color-5 mb-0 fs--1">Finally, you can now create multiverse websites effortlessly.</p>
+                        </div>
+                        <div class="col-lg-3 col-md-6 py-5 px-xl-4 px-2">
+                            <span class="d-block mb-3 fs-5 color-danger icon-Credit-Card2"></span>
+                            <h5 class="fw-400">Excellent Support</h5>
+                            <p class="color-5 mb-0 fs--1">A dedicated support team to handle any of your issues.</p>
+                        </div>
+                        <div class="col-lg-3 col-md-6 py-5 px-xl-4 px-2">
+                            <span class="d-block mb-3 fs-5 color-danger icon-Security-Check"></span>
+                            <h5 class="fw-400">Refund Policy</h5>
+                            <p class="color-5 mb-0 fs--1">If you are not satisfied, just let us know. We will refund you right away.</p>
+                        </div>
+                        <div class="col-12">
+                            <hr class="color-9" /> </div>
+                    </div>
+                    <!--/.row-->
+                </div>
+                <!--/.container-->
+            </section>
+            <section class="font-1 py-5 background-11">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 pr-lg-8 pb-5 pb-lg-0">
+                            <a class="mt-5 d-inline-block mr-2" href="#">
+                            <img src="{% static 'assets2/images/app-google.png' %}" />
+                            </a>
+                            <a class="mt-5 d-inline-block" href="#">
+                            <img src="{% static 'assets2/images/app-apple.png' %}" />
+                            </a>
+                            <div class="mb-3 hidden-sm-up"></div>
+                            <a class="p-2 color-4 fs-1 ml-0 ml-sm-3" href="#">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                            <a class="p-2 color-4 fs-1" href="#">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a class="p-2 color-4 fs-1" href="#">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <div class="fs--1 mt-1 color-3">&copy; 2015 Royal Splits. All rights reserved.</div>
+                        </div>
+                    </div>
+                    <!--/.row-->
+                </div>
+                <!--/.container-->
+            </section>
+        </main>
+<script type="text/javascript">
+  var updateBtns = document.getElementsByClassName('update-cart');
+
+for(var i=0; i < updateBtns.length;i++){
+  updateBtns[i].addEventListener('click',function(){
+    var productId = this.dataset.product;
+    var action = this.dataset.action;
+    console.log('productId',productId,'action',action);
+    console.log('User:',user);
+    if(user === 'AnonymousUser'){
+      addCookieItem(productId,action);
+    }
+    else{
+      updateUserOrder(productId,action)
+    }
+  })
+
+}
+
+
+
+function addCookieItem(productId,action){
+    console.log("user is Note authenticated")
+    if(action == 'add'){
+        if(cart[productId] == undefined){
+            cart[productId] = {'quantity':1}
+        }else{
+            cart[productId]['quantity'] +=1
+        }
+    }
+    if(action == 'remove'){
+        cart[productId]['quantity'] -=1
+        if(cart[productId]['quantity']<=0){
+            console.log('Item should be deleted')
+            delete cart[productId];
+        }
+    }
+    console.log('cart',cart)
+    document.cookie = 'cart='+JSON.stringify(cart) +';domain=;path=/'
+    location.reload()
+    }
+
+function updateUserOrder(productId,action){
+  var url = '/update_item/'
+  fetch(url,{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'X-CSRFToken':csrftoken,
+    },
+    body:JSON.stringify({'productId':productId,'action':action})
+  })
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {   
+    console.log('data',data);
+    location.reload()
+  })
+}
+
+
+
+
+
+</script>
+   {% endblock %}

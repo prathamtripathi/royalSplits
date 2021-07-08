@@ -1,0 +1,534 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <script type='text/javascript'>
+  $(function(){
+  var overlay = $('<div id="overlay"></div>');
+  overlay.show();
+  overlay.appendTo(document.body);
+  $('.popup').show();
+  $('.close').click(function(){
+  $('.popup').hide();
+  overlay.appendTo(document.body).remove();
+  return false;
+  });
+  $('.x').click(function(){
+  $('.popup').hide();
+  overlay.appendTo(document.body).remove();
+  return false;
+  });
+  });
+  </script>
+<link rel="stylesheet" href="{% static '/assets/css/style.css'%}">
+<link rel="stylesheet" href="{% static '/home/css/style.css'%}">
+<script>
+  function Main() {
+    var x = document.getElementById("navbar");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+  </script>
+<div class="container-fluid">
+  <!-- Background animtion-->
+      <div class="background">
+         <div class="cube"></div>
+         <div class="cube"></div>
+         <div class="cube"></div>
+         <div class="cube"></div>
+        <div class="cube"></div>
+<header id="header" class="d-flex align-items-center">
+          <a href="{% url 'home' %}" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+          <div class="container d-flex align-items-center justify-content-between">
+            <h1 class="logo"><a href="{% url 'home' %}" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+            <nav id="navbar" class="navbar" style="display: none;">
+              <ul>
+                 <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+                      <li><a class="nav-link scrollto" href="{% url 'home' %}#about">Why Us</a></li>
+                      <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+                      <li><a class="nav-link scrollto" href="{% url 'blog_list' %}">Our Blogs</a></li>
+                      <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Product</a></li>
+                
+                
+                        {% if user.is_authenticated %}
+                    <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+                      <form id="logout" method="POST" action="{% url 'logout' %}">
+                       {% csrf_token %}
+                       <input type="hidden" />
+                       </form>
+                  
+               {% else %} 
+                  <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+             <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+              {% endif %} 
+              <a class="nav-link scrollto" href="{% url 'cart' %}" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+                       
+                <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+                      <ul>
+                        <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                          <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                          <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                           <li><a class="nav-link scrollto" href="{% url 'tnc' %}#instruct">Instruction</a></li>
+                           {% if user.is_authenticated %}
+                          <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                          {% endif %} 
+                          <li><a class="nav-link scrollto" href="{% url 'page_404' %}">Page 404</a></li>
+                          <li><a class="nav-link scrollto" href="{% url 'page_500' %}">Page 500</a></li>
+                          <li><a class="nav-link scrollto" href="{% url 'page_career' %}">Join Us</a></li>
+                          <li><a class="nav-link scrollto" href="{% url 'findus' %}">Find Us</a></li>
+                          <li><a class="nav-link scrollto" href="{% url 'maintain' %}">Maintainance Page</a></li>
+                      </ul>
+                </li>
+              </ul>
+              <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+          <!-- .navbar -->
+          
+        
+        </header>
+
+
+<section id="hero" class="d-flex align-items-top" style="padding-bottom:20px;">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.2.js"></script>
+
+  <div class='popup'>
+  <div class='cnt223'>
+  <center><img src="https://img.icons8.com/ios-filled/100/fa314a/warning-shield.png"/></center>
+  <h1 style="font-family: 'Dancing Script', cursive; text-transform: capitalize;color: rgb(0, 0, 0); font-size: 55px; padding-top: 25px;">Confirmation</h1>
+  <p style="text-align: center;">
+  Are you of age 21 or above?
+  <br/>
+  <br/>
+  <div class="d-flex justify-content-center">
+  <center><a class="close" style="float:left; padding: 10px;color: white;"><button type="button" class="btn btn-primary" id="shownav" onclick="Main()">Yes</button></a></center>
+  <a href="https://www.google.com/" style="float:left;padding: 10px;"><button type="button" class="btn btn-danger">No</button></a>
+  </div>
+  </p>
+  </div>
+  </div>
+  <div class="container position-relative" data-aos="fade-up" data-aos-delay="500">
+    
+    <center><img src="{% static 'assets/img/logo.gif' %}" class="img-fluid" alt=""></center>                  
+    <h1 style="font-family: 'Dancing Script', cursive; text-transform: capitalize; font-size: 50px; letter-spacing: 3px; margin-bottom: 10px; ">Welcome to The Royal Splits</h1>
+    <h2 style="font-family: 'Caveat', cursive;  font-size: 30px;">Cut's Them All Big-N-Small "None Higher"...</h2>
+  <center><a href="#services" class="btn-get-started scrollto">Shop Now</a></center> 
+
+</div>
+</section>
+</div>
+</div>
+  <!-- End Hero -->
+
+    <!-- ======= Why Us Section ======= -->
+    <section id="about" class="about">
+    <section id="why-us" class="why-us">
+      <div class="container">
+        <div class="row">
+          <div data-aos="fade-up"><h1 class="color-10">Why choose Us?</h1></div>
+          <div class="col-lg-4" data-aos="fade-up">
+            <div class="box">
+              <span>01</span>
+              <h4>Our entire production of the Blunt Box is accomplished with pride and integrity in the United States.</h4>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="150">
+            <div class="box">
+              <span>02</span>
+              <h4>Accessorized with necklaces, our products come in a variety of styles and colors, so Express Yourself.</h4>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+            <div class="box">
+              <span>03</span>
+              <h4>Royal Splits Blunt Box splits any size from mini-cigarillos to full blunts,the only cigar splitter you will ever need.</h4>
+            </div>
+          </div>
+
+        </div>
+        <div class="row color-10">
+          <div class="col-lg-12 pt-12 pt-lg-12 order-12 order-lg-1 content" data-aos="fade-right">
+            <p class="fst-italic">
+              
+            </p>
+            {% for it in about.all %}
+             <ul>
+              <li><i class="bi bi-check-circle"></i> {{it.description}}</li>
+              {% endfor %}
+            </ul>      
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </section><!-- End Why Us Section -->
+
+    <!-- ======= Clients Section ======= -->
+    <section id="clients" class="clients">
+      <center>
+      <div class="col-lg-6 col-md-4 col-7">
+        <img src="{% static 'assets/img/Product/page-subtitle-right-360.gif' %}" class="img-fluid" alt="">
+      </div>
+    </center>
+      <div class="container" data-aos="zoom-in">
+
+        <div class="row d-flex align-items-center">
+
+          <div class="col-lg-12 col-md-4 col-7">
+            <img src="{% static 'assets/img/instruction.gif' %}" class="img-fluid" alt="">
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Clients Section -->
+ 
+
+
+    <!-- ======= Services Section ======= -->
+    
+    <section id="services" class="services">
+      <div class="nine">
+        <h1>Our Products<span>None Higher</span></h1>
+      </div>
+
+      <div class="float-right" style="height:100%;">
+        <div id="mySidebar" class="sidebar" >
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="margin-top: 50px;">×</a>
+          <div class="row total-header-section">
+            <center><img src="https://img.icons8.com/wired/64/ffffff/checkout.png" style="width: 25px; margin-top: 20px;"/></center>
+            <h3 style="color: cornsilk; padding: 10px;text-align: center;">Your Cart</h3>
+          </div>
+          {% if user.is_authenticated %}
+          {% if object %}
+          {% for order_item in object.items.all %}
+        <div class="row cart-detail">
+          <div class="col-lg-10 col-sm-10 col-10 cart-detail-img" style="text-align: center;">
+            <img src="{{ order_item.item.thumbnail_1.url }}" style="width: 100px;">
+          </div>
+          <div class="col-lg-8 col-sm-8 col-8 cart-detail-product" style="text-align: center;">
+          <span class="count" style="color: white; margin-left: 60px;">Quantity:{{order_item.quantity}}</span>
+        </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% else %}
+        <div class="row cart-detail">
+          <div class="col-lg-10 col-sm-10 col-10 cart-detail-img" style="text-align: center;">
+            <img src="#" style="width: 100px;" id="rowSideBarCart">
+          </div>
+          <div class="col-lg-8 col-sm-8 col-8 cart-detail-product" style="text-align: center;">
+          <span class="count" style="color: white; margin-left: 60px;"><ul id="rowCartPrice"></ul></span>
+        </div>
+        </div>
+        {% endif %}
+        
+        
+        </div>
+      </div>
+    <div class="container">
+      <div class="heading-main">
+                    <center><h1>Solid neon Colour</h1></center>
+      </div> 
+      <div class="row justify-content-evenly">
+        {%for it in prod.all%}
+        {% if forloop.counter|divisibleby:3 and not forloop.counter|divisibleby:6 %}
+          <div class="heading-main">
+            <h1>Day Glow Colour</h1>
+          </div> 
+        {% endif %}
+        {% if forloop.counter|divisibleby:5 %}
+        <div class="heading-main">
+          <h1>Glow-in-the-dark</h1>
+        </div> 
+        {% endif %}
+        <div class="col-md-6">
+        <center><div class="icon-box">
+          <center><h2 id="productTitle{{it.id}}">{{it.title}}</h2></center>
+        <center><a href=""><img id='image{{it.id}}' src="{{it.image1.url}}" class="img-fluid"  alt=""></a></center>
+        <div class="thumb" style="cursor: pointer;">
+                        <form method="POST" action="">
+                        <label>
+                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_1.url }}" checked>
+                          <img src="{{it.thumbnail_1.url}}" onClick="myFunctionMain('{{it.thumbnail_1.url}}','{{ it.id }}')">
+                        </label>
+                        <label>
+                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_2.url }}">
+                          <img src="{{it.thumbnail_2.url}}" onClick="myFunctionMain('{{it.thumbnail_2.url}}','{{ it.id }}')" onClick="myFunctionMain('{{it.thumbnail_1.url}}','{{ it.id }}')">
+                        </label>
+                        <!-- <button class="flow" onClick="myFunctionMain('{{it.thumbnail_1.url}}','{{ it.id }}')">
+                          <a>
+                            <img src="{{it.thumbnail_1.url}}" style=" border: 2px solid #C0C0C0;padding: 2px; width:80px;">
+                          </a></button> -->
+                        <!-- <button class="flow" onClick="myFunctionMain('{{it.thumbnail_2.url}}','{{it.id}}')" >
+                          <a>
+                            <img src="{{it.thumbnail_2.url}}" style=" border: 2px solid #C0C0C0;padding: 2px; width:80px;">
+                          </a></button> -->
+                        {% if it.thumbnail_3 %}
+                        <label>
+                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_3.url }}">
+                          <img src="{{it.thumbnail_3.url}}" onClick="myFunctionMain('{{it.thumbnail_3.url}}','{{ it.id }}')" >
+                        </label>
+                         {% endif %}
+                        {% if it.thumbnail_4 %}
+                        <label>
+                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_4.url }}">
+                          <img src="{{it.thumbnail_4.url}}" onClick="myFunctionMain('{{it.thumbnail_4.url}}','{{ it.id }}')" >
+                        </label>
+                        {% endif %}
+                        {% if it.thumbnail_5 %}
+                        <label>
+                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_5.url }}">
+                          <img src="{{it.thumbnail_5.url}}" onClick="myFunctionMain('{{it.thumbnail_5.url}}','{{ it.id }}')" >
+                        </label>
+                         {% endif %}
+                         {% if it.thumbnail_6  %}
+                        <label>
+                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_6.url }}">
+                          <img src="{{it.thumbnail_6.url}}" onClick="myFunctionMain('{{it.thumbnail_6.url}}','{{ it.id }}')" >
+                        </label>
+                         {% endif %}
+                         {% if it.thumbnail_7 %}
+                        <label>
+                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_7.url }}">
+                          <img src="{{it.thumbnail_7.url}}" onClick="myFunctionMain('{{it.thumbnail_7.url}}','{{ it.id }}')" >
+                        </label>
+                         {% endif %}
+                         
+              </div>
+                      <p id="productPrice{{it.id}}">${{it.price}}</p>                        
+                      <div class="btn-center">
+                         <a class="btn-buynow update-cart" data-product="{{it.id}}" data-action="add" id='buynow' style="cursor: pointer;">Add to cart</a>
+                         <!-- <a href="{% url 'cart' %}" class="btn-buynow update-cart" data-product="{{it.id}}" data-action="add" style="cursor: pointer;">Order Now </a> -->
+                         <a href="{% url 'cart' %}" class="btn-buynow update-cart" data-product="{{it.id}}" data-action="add" style="cursor: pointer;">Order Now </a> 
+                    
+                        </div></form>
+                      
+  
+        </div>
+      </center> 
+      </div>
+                {% endfor %}
+        
+      </div>
+    </div>
+<center>
+        <div class="centerbox">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch color-10" data-aos="fade-up">
+              <div class="icon-box" style="width: 800px; margin-left: 16%;">
+                <h4><a href=""></a>Free Necklace with every order you place !!</a></h4>
+                <div class="productfree">
+                <img id='mainphoto5' src="{% static 'assets/img/necklace- (1).png' %}" class="img-fluid" alt="">
+               </div>
+               <span style="margin-top: 10px;">With Every Order you place, you get a <strong style="color: rgb(209, 255, 4); font-weight: 800;">FREE PREMIUM NECKLACE</strong>  from Royal Splits as a sign for <strong style="color: rgb(209, 255, 4); font-weight: 800;">your trust in us and the aesthetic</strong> it provides to the product </span>
+              </div>  
+            </div>
+          </div> 
+          </div>  
+        </center>
+    </section><!-- End Services Section -->
+
+
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+      <div class="container" data-aos="zoom-in">
+
+        <div class="text-center">
+          <h3>Sleek, compact, simple design and concept, cutting edge necessity for lighting up.</h3>
+          <p>Convenient, innovative and essential: Royal Splits Blunt Box.... "None Higher"</p>
+          <a class="cta-btn" href="{% url 'formpage' %}">Order Now</a>
+        </div>
+
+      </div>
+    </section> 
+    <footer id="footer">
+      <div class="footer-top">
+        <div class="container">
+          <div class="row">
+  
+            <div class="col-lg-4 col-md-6">
+              <div class="footer-info">
+                <div class="thumbfooter">
+                <button class="flow"><a href="contact-us.html"><img src="{% static 'assets/img/Product/PRODUCT/description/27066948.jpg' %}"></a></button>
+              </div>
+                <h3>The Royal Splits</h3>
+                <p>
+                  P.O. Box 593975<br>
+                  FL 32859<br> Orlando, USA<br>
+  
+                  <strong>Email:</strong> sales@RoyalSplits.com<br>
+                </p>
+                <div class="social-links mt-3">
+                  <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                  <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                  <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                  <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                  <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6 footer-newsletter">
+              <h4>Useful Links</h4>
+              <div class="thumbfooter" style="margin-top: 20px; margin-left: 30px;"> 
+                <button class="flow"><a href="{% url 'findus' %}"><img src="{% static 'assets/img/Product/PRODUCT/description/wc196914fu1.png' %}"></a></button>
+                <button class="flow"><a href="{% url 'home' %}"><img src="{% static 'assets/img/Product/PRODUCT/description/wc2972ju1.png' %}"></a></button>
+                <button class="flow"><a a href="{% url 'formpage' %}"><img src="{% static 'assets/img/Product/PRODUCT/description/wc29773br2.png' %}"></a></button>
+                <button class="flow"><a href="{% url 'contact' %}"><img src="{% static 'assets/img/Product/PRODUCT/description/wc96233pr1.png' %}"></a></button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 footer-newsletter">
+              <div class="thumbfooter1">
+              <button class="flow"><img src="{% static 'assets/img/Product/PRODUCT/description/madeUSA.png' %}" ></button>
+            </div>
+          </div>
+          </div>
+        </div>
+        </div>
+    </footer><!-- End Footer -->
+    
+      
+    
+<script type="text/javascript">
+  function openNav() {
+  document.getElementById("mySidebar").style.width = "150px";
+
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  
+}
+
+
+function myFunctionMain(ImageUrl,pid) {    
+            var id = '#image' + pid;
+            var product = document.querySelector(id);
+            product.src = ImageUrl;
+}
+
+</script>
+<script type="text/javascript">
+  var updateBtns = document.getElementsByClassName('update-cart');
+
+for(var i=0; i < updateBtns.length;i++){
+  updateBtns[i].addEventListener('click',function(){
+    var productId = this.dataset.product;
+    var action = this.dataset.action;
+    console.log('productId',productId,'action',action);
+    console.log('User:',user);
+    if(user == 'AnonymousUser'){
+      addCookieItem(productId,action);
+    }
+    else{
+      updateUserOrder(productId,action)
+    }
+  })
+
+}
+
+
+
+function addCookieItem(productId,action){
+    console.log("user is Note authenticated")
+    if(action == 'add'){
+        if(cart[productId] == undefined){
+            cart[productId] = {'quantity':1}
+        }else{
+            cart[productId]['quantity'] +=1
+        }
+    }
+    if(action == 'remove'){
+        cart[productId]['quantity'] -=1
+        if(cart[productId]['quantity']<=0){
+            console.log('Item should be deleted')
+            delete cart[productId];
+        }
+    }
+    console.log('cart',cart)
+    document.cookie = 'cart='+JSON.stringify(cart) +';domain=;path=/'
+    location.reload()
+    }
+
+function updateUserOrder(productId,action){
+  var url = '/update_item/'
+  fetch(url,{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'X-CSRFToken':csrftoken,
+    },
+    body:JSON.stringify({'productId':productId,'action':action})
+  })
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {   
+    console.log('data',data);
+    //location.reload()
+  })
+}
+</script>
+<style>
+  .thumb img{
+  padding: 1px;
+  border-radius: 4px; 
+  height: 60px; 
+  width: 60px;
+}
+.thumb img:hover {
+  border: 2px solid rgb(94, 79, 224);
+  box-shadow: 0 0 2px 1px  rgb(94, 79, 224);;
+}
+.thumbfooter img{
+  padding: 1px;
+  border-radius: 4px; 
+  height: 125px; 
+  width: 125px;
+  
+}
+
+.thumbfooter img:hover {
+  border: 2px solid rgb(94, 79, 224);
+  background-color: white; 
+  font-size: 400;
+}
+@media (max-width: 768px) {
+  .thumbfooter img{
+  padding: 1px;
+  border-radius: 4px; 
+  height: 100px; 
+  width: 100px; 
+}
+}
+.thumbfooter1 img{
+  padding: 1px;
+  border-radius: 4px; 
+  width: 250px; 
+  height:150px; 
+  margin-left: 50px;
+  
+}
+
+.thumbfooter1 img:hover {
+  border: 2px solid rgb(94, 79, 224);
+  background-color: white; 
+  font-size: 400;
+}
+@media (max-width: 768px) {
+  .thumbfooter1 img{
+  padding-top: 4px;
+  border-radius: 4px; 
+  text-align: center;
+  margin-left: 30px;
+  height: auto; 
+  width: 220px; 
+}
+}
+</style>
+ 
+             
+ {% endblock %}
