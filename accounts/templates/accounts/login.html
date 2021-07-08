@@ -10,7 +10,7 @@
   text-transform: uppercase;
   font-weight: 700;
   font-size: 15px;
-  width: 15%;
+  width: 150px;
   letter-spacing: 0.5px;
   display:inline-block;
   padding: 10px 30px;
@@ -77,13 +77,13 @@
                   </header>
 <section>
 	<div class="container">
-		<center><h1 style="font-size: 80px;color:white;font-family: 'Dancing Script', cursive; text-transform: capitalize;;">Login Here</h1>
+		<center><h1 style="font-size: 80px;color:white;font-family: 'Dancing Script', cursive; text-transform: capitalize;">Login Here</h1>
 		<form method="POST" action="{% url 'login' %}">
 		{% csrf_token %}
-		<label style="color: white;font-size: 20px; font-weight: 500;padding: 10px;">Username:</label>
+		<label style="color: white;font-size: 20px; font-weight: 500;padding: 5px;">Username:</label>
 		<input type="text" name="username"/>
 		<br />
-    <label style="color: white;font-size: 20px; font-weight: 500;padding: 10px;">Password:</label>
+    <label style="color: white;font-size: 20px; font-weight: 500;padding: 5px;">Password:</label>
 		<input type="password" name="password" />
 		<br />
 
@@ -114,7 +114,7 @@
       </center> 
       <hr class="hr-text" data-content="OR" style="color: white;">
   <center>
-  <h5 class="text-justify-center" style="color: wheat;">Haven't registered yet? <a href="{% url 'signup' %}">Sign in</a></h5>
+  <h5 class="text-justify-center" style="color: wheat;">Haven't registered yet? <a href="{% url 'signup' %}">Sign Up</a></h5>
 </center>
   <div class="container">
     <center>
