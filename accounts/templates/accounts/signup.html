@@ -1,0 +1,112 @@
+
+
+
+
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% providers_media_js %}
+{% block content %}
+{% load static %}
+<header id="header" class="d-flex align-items-center">
+                    <a href="{% url 'home' %}" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+                    <div class="container d-flex align-items-center justify-content-between">
+                      <h1 class="logo"><a href="{% url 'home' %}" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+                      <nav id="navbar" class="navbar">
+                        <ul>
+                          <li><a class="nav-link scrollto active" href="{% url 'home' %}">Home</a></li>
+                          <li><a class="nav-link scrollto" href="{% url 'home' %}">Why Us</a></li>
+                          <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+                          <li><a class="nav-link scrollto" href="{% url 'home' %}">Product</a></li>
+                          
+                                  {% if user.is_authenticated %}
+                              <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+                                <form id="logout" method="POST" action="{% url 'logout' %}">
+                                 {% csrf_token %}
+                                 <input type="hidden" />
+                                 </form>
+                             
+                         {% else %} 
+                            <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+                       <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+                        {% endif %} 
+                          <a class="nav-link scrollto" href="{% url 'formpage' %}" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+                            <i class="bi bi-list mobile-nav-toggle"></i>
+                          <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+                                <ul>
+                                  <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                                    <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                                    <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                                     <li><a class="nav-link scrollto" href="{% url 'tnc' %}">Instruction</a></li>
+                                    <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                                </ul>
+                          </li>
+                        </ul>
+                        <i class="bi bi-list mobile-nav-toggle"></i>
+                      </nav><!-- .navbar -->
+                  </header>
+<center>
+<div class="row">
+     <div class="col-md-8 mx-auto social-container my-2 order-md-1">
+        
+         <button class="btn btn-primary mb-2">
+             <a href="{% provider_login_url 'facebook' method='oauth2' %}" style="color: white; text-decoration: none;">Login with Facebook
+             </a>
+         </button>
+         
+     </div>
+ </div>
+ </div>
+</center>
+<center>
+<div class="row">
+     <div class="col-md-8 mx-auto social-container my-2 order-md-1">
+         <button class="btn btn-danger mb-2">
+             <a  href="{% url 'social:begin' 'google-oauth2' %}" style="color: white; text-decoration: none;">Login with Google
+             </a></button>
+     </div>
+ </div>
+ </div>
+</center>
+<section>
+	<div class="container">
+					<center><h1>SignUp!</h1>
+			<form method="POST" action="{% url 'signup' %}">
+			{% csrf_token %}
+			Username:
+			<br />
+			<input type="text" name="username"/>
+			<br />
+      Email
+      <br />
+      <input type="email" name="email"/>
+      <br />
+			Password:
+			<br />
+			<input type="password" name="password1" />
+			<br />
+			Confirm Password:
+			<br />
+			<input type="password" name="password2" />
+			<br />
+			<br />
+			<button style="padding: 0;
+border: none;
+background: none;"><input  type="submit" value="SignUp">
+			</button>
+
+
+	
+</form>
+<div class="container">
+	<center>
+  {% if error %}
+  {{ error }}
+  {% endif %}
+
+</center>
+<h5>Didn't registered yet then <a href="{% url 'login' %}">Log in</a></h5></center>
+</div>
+
+	
+</section>
+{% endblock %}

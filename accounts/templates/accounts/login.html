@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% providers_media_js %}
+{% block content %}
+{% load static %}
+<style>
+  .btn-buynow {
+  font-family: "Raleway", sans-serif;
+  margin-top: 1%;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 15px;
+  width: 15%;
+  letter-spacing: 0.5px;
+  display:inline-block;
+  padding: 10px 30px;
+  transition: 0.5s;
+  border: 2px solid rgb(250, 250, 250);
+  color: #fff;
+  border-radius: 6px;
+
+}
+#services .btn-buynow:hover{
+  background: #ececec;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #000;
+}
+.hr-text {
+  line-height: 1em;
+  position: relative;
+  outline: 0;
+  border: 0;
+  color: black;
+  text-align: center;
+  height: 1.5em;
+  opacity: .5;
+
+}
+</style>
+<header id="header" class="d-flex align-items-center">
+                    <a href="index.html" ><img src="{% static 'assets/img/My Post.png' %}" alt="" class="img-fluid" id="logomain" style="margin-left: 50px; margin-right: 40px;"></a>
+                    <div class="container d-flex align-items-center justify-content-between">
+                      <h1 class="logo"><a href="landingpage/index.html" style="font-family: 'Dancing Script', cursive; text-transform: capitalize;">Royal Splits</a></h1>
+                      <nav id="navbar" class="navbar">
+                        <ul>
+                          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                          <li><a class="nav-link scrollto" href="index.html#about">Why Us</a></li>
+                          <li><a class="nav-link scrollto" href="{% url 'page_about' %}">About Us</a></li>
+                          <li><a class="nav-link scrollto" href="{% url 'home' %}">Product</a></li>
+                          
+                                  {% if user.is_authenticated %}
+                              <a class="nav-item nav-link active" href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+                                <form id="logout" method="POST" action="{% url 'logout' %}">
+                                 {% csrf_token %}
+                                 <input type="hidden" />
+                                 </form>
+                             <a class="nav-link scrollto" href="{% url 'formpage' %}" ><i class="fa fa-shopping-cart"  style="font-size:26px; padding: 10px 20px 10px 10px; align-self: center;"></i></a>
+                            <i class="bi bi-list mobile-nav-toggle"></i>
+                         {% else %} 
+                            <a class="nav-item nav-link active" href="{% url 'signup' %}">Signup</a>
+                       <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+                        {% endif %} 
+                          
+                          <li class="dropdown"><a href="#"><span>Other Options</span> <i class="bi bi-chevron-down"></i></a>
+                                <ul>
+                                  <li><a class="nav-link scrollto" href="{% url 'formpage' %}">Whole Sale</a></li>
+                                    <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact Us</a></li>
+                                    <li><a class="nav-link scrollto" href="{% url 'tnc' %}">T&C</a></li>
+                                     <li><a class="nav-link scrollto" href="{% url 'tnc' %}">Instruction</a></li>
+                                    <li><a class="nav-link scrollto" href="{% url 'profile_setting' %}">Profile Settings</a></li>
+                                </ul>
+                          </li>
+                        </ul>
+                        <i class="bi bi-list mobile-nav-toggle"></i>
+                      </nav><!-- .navbar -->
+                  </header>
+<section>
+	<div class="container">
+		<center><h1 style="font-size: 80px;color:white;font-family: 'Dancing Script', cursive; text-transform: capitalize;;">Login Here</h1>
+		<form method="POST" action="{% url 'login' %}">
+		{% csrf_token %}
+		<label style="color: white;font-size: 20px; font-weight: 500;padding: 10px;">Username:</label>
+		<input type="text" name="username"/>
+		<br />
+    <label style="color: white;font-size: 20px; font-weight: 500;padding: 10px;">Password:</label>
+		<input type="password" name="password" />
+		<br />
+
+		<a class="btn-buynow" style="cursor: pointer;"><input type="submit" value="Login" style="background: none;color: white; border: none;padding: 0; font: inherit;outline: inherit;"></a>
+		</form><br/>
+    <h5 class="text-justify-center" style="color: wheat;"><a href="{% url 'reset_password' %}">Forgot Password ?</a></h5></center>
+    <center>
+      <h3 style="color: white;">OR</h3>
+      <div class="row">
+           <div class="col-md-8 mx-auto social-container my-2 order-md-1">
+               <button class="btn btn-primary mb-2">
+                   <a href="{% provider_login_url 'facebook' method='oauth2' %}" style="color: white; text-decoration: none;">Login with Facebook
+                   </a>
+               </button>
+           </div>
+       </div>
+       </div>
+      </center>
+      <center>
+      <div class="row" style="margin-bottom: 20px;">
+           <div class="col-md-8 mx-auto social-container my-2 order-md-1" style="padding: 0px;">
+               <button class="btn btn-danger mb-2">
+                   <a  href="{% provider_login_url 'google' %}" style="color: white; text-decoration: none;">Login with Google
+                   </a></button>
+           </div>
+       </div>
+       </div>
+      </center> 
+      <hr class="hr-text" data-content="OR" style="color: white;">
+  <center>
+  <h5 class="text-justify-center" style="color: wheat;">Haven't registered yet? <a href="{% url 'signup' %}">Sign in</a></h5>
+</center>
+  <div class="container">
+    <center>
+  {% if error %}
+  {{ error }}
+  {% endif %}
+
+</center>
+    
+  </div>
+	</div>
+</section>
+{% endblock %}
