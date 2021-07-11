@@ -4,6 +4,9 @@
 {% block content %}
 {% load static %}
 <style>
+body{
+  background: linear-gradient(to bottom, #434343 0%, #000000 100%); 
+}
   .btn-buynow {
   font-family: "Raleway", sans-serif;
   margin-top: 1%;
@@ -88,24 +91,35 @@
  </div>
 </center>
 <section>
-  <div class="container" style="  display: flex;
-  justify-content: center;">
-		<center><h1 style="font-size: 80px;color:white;font-family: 'Dancing Script', cursive; text-transform: capitalize;">Sign Up Here</h1>
+  <div class="container" style="display: flex;justify-content: center;">
+		<center><h1 style="font-size: 80px;color:white;font-family: 'Dancing Script', cursive; text-transform: capitalize; padding-bottom: 20px;">Sign Up Here</h1>
 		<form method="POST" action="{% url 'signup' %}">
 		{% csrf_token %}
-    <label style="color: white;font-size: 18px; font-weight: 500;padding: 10px;">Username:</label>
-    <input type="text" name="username" />
-    <br />
-    <label style="color: white;font-size: 18px; font-weight: 500;padding: 10px;">E-mail:</label>
-    <input type="email" name="email"/>
-    <br />
-    <label style="color: white;font-size: 18px; font-weight: 500;padding: 10px;">Password:</label>
-    <input type="password" name="password1" />
-    <br />
-    <label style="color: white;font-size: 18px; font-weight: 500;padding: 10px;">Confirm:</label>
-    <input type="password" name="password2" />
-    <br />
-		<a class="btn-buynow" style="cursor: pointer;"><input  type="submit" value="SignUp" style="background: none;color: white; border: none;padding: 0; font: inherit;outline: inherit;"></a>
+    <div class="form-group row">
+      <label for="inputPassword" class="col-sm-3 col-form-label" style="color: white;font-size: 18px; font-weight: 500;padding: 10px; text-align: left;">Username:</label>
+      <div class="col-sm-9" >
+        <input type="text" name="username" class="form-control">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputPassword" class="col-sm-3 col-form-label" style="color: white;font-size: 18px; font-weight: 500;padding: 10px; text-align: left;">E-mail:</label>
+      <div class="col-sm-9" >
+        <input type="email" name="email" class="form-control">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputPassword" class="col-sm-3 col-form-label" style="color: white;font-size: 18px; font-weight: 500;padding: 10px; text-align: left;">Password:</label>
+      <div class="col-sm-9" >
+        <input type="password" name="password1" class="form-control">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputPassword" class="col-sm-3 col-form-label" style="color: white;font-size: 18px; font-weight: 500;padding: 10px; text-align: left;">Confirm:</label>
+      <div class="col-sm-9" >
+        <input type="password" name="password2" class="form-control">
+      </div>
+    </div>
+		<a class="btn-buynow" style="cursor: pointer;"><input  type="submit" value="Sign Up" style="background: none;color: white; border: none;padding: 0; font: inherit;outline: inherit;"></a>
 		</form><br/>
       <h3 style="color: white;">OR</h3>
       <div class="row">
@@ -132,7 +146,7 @@
 
 </center>
 <center>
-<h5 style="color: #fff;">Didn't registered yet then <a href="{% url 'login' %}">Log in</a></h5></center>
+<h5 style="color: #fff;">Already a member? <a href="{% url 'login' %}">Log in</a></h5></center>
 </div>
 
 	

@@ -1,13 +1,40 @@
-/**
-* Template Name: Day - v4.2.0
-* Template URL: https://bootstrapmade.com/day-multipurpose-html-template-for-free/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+.btn-buynow {
+  font-family: "Raleway", sans-serif;
+  margin-top: 1%;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 15px;
+  width: 150px;
+  letter-spacing: 0.5px;
+  display:inline-block;
+  padding: 10px 30px;
+  transition: 0.5s;
+  border: 2px solid rgb(250, 250, 250);
+  color: #fff;
+  border-radius: 6px;
+
+}
+#services .btn-buynow:hover{
+  background: #ececec;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #000;
+}
+.hr-text {
+  line-height: 1em;
+  position: relative;
+  outline: 0;
+  border: 0;
+  color: black;
+  text-align: center;
+  height: 1.5em;
+  opacity: .5;
+
+}
 #first, #second, #third, #fourth {
   display: none
 }
