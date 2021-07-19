@@ -93,7 +93,21 @@
                                 <div class="col-md-6 col-lg-12">
                                     <div class="row border color-9 mb-3 py-3 mx-0">
                                         <div class="col-lg-3">
-                                            <img class="w-100" src="{{ order_item.product.thumbnail_1.url }}">
+                                            <img class="w-100" src="" id='cartImage{{ order_item.product.id }}'>
+                                                <p style="display:none;" id="thumbnail{{order_item.product.id}}">{{order_item.product.thumbnail_1.url}}</p>
+                                                <script>
+                                                    var id = '#cartImage' + {{ order_item.product.id }};
+                                                    var thumbnail = '#thumbnail' + {{order_item.product.id}};
+                                                    var img = document.querySelector(id);
+                                                    var ptag = document.querySelector(thumbnail).innerHTML
+                                                    if(localStorage.getItem({{order_item.product.id}}) == null){
+                                                        img.src = ptag;
+                                                    }
+                                                    else{
+                                                        img.src = localStorage.getItem({{order_item.product.id}});
+                                                    }
+
+                                                </script>
                                         </div>
                                         <div class="col-lg-6 color-10">
                                             <h5 class="fs-0">Details</h5>
