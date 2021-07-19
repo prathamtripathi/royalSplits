@@ -233,62 +233,52 @@ $(document).ready(function() {
           <center><h2 id="productTitle{{it.id}}">{{it.title}}</h2></center>
         <center><a href=""><img id='image{{it.id}}' src="{{it.image1.url}}" class="img-fluid"  alt=""></a></center>
         <div class="thumb" style="cursor: pointer;">
-                        <form method="POST" action="">
+                        
                         <label>
-                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_1.url }}" checked>
+                          <input type="radio" name="productThumb{{it.id}}" value="{{ it.thumbnail_1.url }}" required>
                           <img src="{{it.thumbnail_1.url}}" onClick="myFunctionMain('{{it.thumbnail_1.url}}','{{ it.id }}')">
                         </label>
                         <label>
-                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_2.url }}">
+                          <input type="radio" name="productThumb{{it.id}}" value="{{ it.thumbnail_2.url }}">
                           <img src="{{it.thumbnail_2.url}}" onClick="myFunctionMain('{{it.thumbnail_2.url}}','{{ it.id }}')" onClick="myFunctionMain('{{it.thumbnail_1.url}}','{{ it.id }}')">
                         </label>
-                        <!-- <button class="flow" onClick="myFunctionMain('{{it.thumbnail_1.url}}','{{ it.id }}')">
-                          <a>
-                            <img src="{{it.thumbnail_1.url}}" style=" border: 2px solid #C0C0C0;padding: 2px; width:80px;">
-                          </a></button> -->
-                        <!-- <button class="flow" onClick="myFunctionMain('{{it.thumbnail_2.url}}','{{it.id}}')" >
-                          <a>
-                            <img src="{{it.thumbnail_2.url}}" style=" border: 2px solid #C0C0C0;padding: 2px; width:80px;">
-                          </a></button> -->
+                        
                         {% if it.thumbnail_3 %}
                         <label>
-                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_3.url }}">
+                          <input type="radio" name="productThumb{{it.id}}" value="{{ it.thumbnail_3.url }}">
                           <img src="{{it.thumbnail_3.url}}" onClick="myFunctionMain('{{it.thumbnail_3.url}}','{{ it.id }}')" >
                         </label>
                          {% endif %}
                         {% if it.thumbnail_4 %}
                         <label>
-                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_4.url }}">
+                          <input type="radio" name="productThumb{{it.id}}" value="{{ it.thumbnail_4.url }}">
                           <img src="{{it.thumbnail_4.url}}" onClick="myFunctionMain('{{it.thumbnail_4.url}}','{{ it.id }}')" >
                         </label>
                         {% endif %}
                         {% if it.thumbnail_5 %}
                         <label>
-                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_5.url }}">
+                          <input type="radio" name="productThumb{{it.id}}" value="{{ it.thumbnail_5.url }}">
                           <img src="{{it.thumbnail_5.url}}" onClick="myFunctionMain('{{it.thumbnail_5.url}}','{{ it.id }}')" >
                         </label>
                          {% endif %}
                          {% if it.thumbnail_6  %}
                         <label>
-                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_6.url }}">
+                          <input type="radio" name="productThumb{{it.id}}" value="{{ it.thumbnail_6.url }}">
                           <img src="{{it.thumbnail_6.url}}" onClick="myFunctionMain('{{it.thumbnail_6.url}}','{{ it.id }}')" >
                         </label>
                          {% endif %}
                          {% if it.thumbnail_7 %}
                         <label>
-                          <input type="radio" name="productThumb{{ it.id }}" value="{{ it.thumbnail_7.url }}">
+                          <input type="radio" name="productThumb{{it.id}}" value="{{ it.thumbnail_7.url }}">
                           <img src="{{it.thumbnail_7.url}}" onClick="myFunctionMain('{{it.thumbnail_7.url}}','{{ it.id }}')" >
                         </label>
-                         {% endif %}
+                         {% endif %}</div>
                          
-              </div>
+              
                       <p id="productPrice{{it.id}}">${{it.price}}</p>                        
                       <div class="btn-center">
-                         <a class="btn-buynow update-cart" data-product="{{it.id}}" data-action="add" id='buynow' style="cursor: pointer;">Add to cart</a>
-                         <!-- <a href="{% url 'cart' %}" class="btn-buynow update-cart" data-product="{{it.id}}" data-action="add" style="cursor: pointer;">Order Now </a> -->
-                         <a href="{% url 'cart' %}" class="btn-buynow update-cart" data-product="{{it.id}}" data-action="add" style="cursor: pointer;">Order Now </a> 
-                    
-                        </div></form>
+                         <a class="btn-buynow update-cart" data-product="{{it.id}}" data-action="add" id='buynow' style="cursor: pointer;" onclick="displayRadioValue('{{it.id}}')">Add to cart</a>
+                         <a href="{% url 'cart' %}" class="btn-buynow update-cart" data-product="{{it.id}}" data-action="add" style="cursor: pointer;" onclick="displayRadioValue('{{it.id}}')">Order Now </a></div>
                       
   
         </div>
@@ -366,18 +356,8 @@ $(document).ready(function() {
     </footer><!-- End Footer -->
     
       
-    
+ 
 <script type="text/javascript">
-  function openNav() {
-  document.getElementById("mySidebar").style.width = "150px";
-
-}
-
-function closeNav() {
-  document.getElementById("mySidebar").style.width = "0";
-  
-}
-
 
 function myFunctionMain(ImageUrl,pid) {    
             var id = '#image' + pid;
@@ -442,6 +422,30 @@ function updateUserOrder(productId,action){
     console.log('data',data);
     //location.reload()
   })
+}
+</script>
+<script>
+var hours = 24;
+var now = new Date.getTime();
+var stepTime = localStorage.getItem('stepTime');
+if(stepTime == null){
+  localStorage.setItem('stepTime',now);
+}
+else{
+  if(now - stepTime > hours*60*60*1000){
+    localStorage.clear();
+    localStorage.setItem('stepTime',now);
+  }
+}
+
+function displayRadioValue(pid) {
+    var id = 'productThumb' + pid;
+    var ele = document.getElementsByName(id);
+      
+    for(i = 0; i < ele.length; i++) {
+        if(ele[i].checked)     
+        localStorage.setItem(pid,ele[i].value);
+    }
 }
 </script>
 <style>
