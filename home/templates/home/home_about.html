@@ -426,7 +426,7 @@ function updateUserOrder(productId,action){
 </script>
 <script>
 var hours = 24;
-var now = new Date.getTime();
+var now = new Date().getTime();
 var stepTime = localStorage.getItem('stepTime');
 if(stepTime == null){
   localStorage.setItem('stepTime',now);
