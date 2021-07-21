@@ -182,7 +182,11 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col-12 border color-9 align-self-start">
+                                    {% if user.is_authenticated %}
                                     <p class="fw-600 my-3 color-10">You have {{order.count}} items in cart</p>
+                                    {% else %}
+                                    <p class="fw-600 my-3 color-10">Your items in cart</p>
+                                    {% endif %}
                                     <hr class="color-9">
                                     
                                     
